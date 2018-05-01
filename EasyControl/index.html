@@ -52,7 +52,10 @@
 	var lightdata;
 	var tempdata;
 	var celsius;
-	setup();
+	//setup();
+	cpf.setPinMode('["resetPin"],["setPinMode", "analog", 0, "INPUT"]');
+	lightdata = cpf.get("light sensor");
+	document.getElementById("lightvalue").innerHTML = lightdata;
 	// Analog
 	function loop() {
 		if(cpf){
@@ -66,7 +69,7 @@
 		}
 		setTimeout(loop, 1000);
 	}
-	loop();
+	//loop();
 	
 	// RGB
 	function changeColor() {
