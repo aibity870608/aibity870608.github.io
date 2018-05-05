@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Servo and Temperature</title>
+</head>
+<body>
+    <span class="analogvalue" id="tempvalue">none</span>
+    
+<script>
+    var tempdata;
+	var celsius;
+    setup();
+
+    if(cpf){
+        tempdata = cpf.get("a0");
+		celsius = toCelsius(tempdata);
+        document.getElementById("tempvalue").innerHTML = celsius;
+
+    }
+
+
+    // Temperature
+    function toCelsius(value) {
+		var resistance = parseFloat((1023-value) * 10000 / value);
+		var temperature = 1 / (Math.log(resistance / 10000) / 3975+1 / 298.15) - 273.15;
+		
+		return temperature.toFixed(2);
+	}
+
+    function setup(){
+        if(cpf){
+            //temperature
+            cpf.setPinMode('["resetPin"],["setPinMode", "analog", 0, "INPUT"]');
+            //servo
+            cpf.setPinMode('["resetPin"],["servo_init", 8, 90, 500 , 2400]');
+               //["servo_init", < 2~13 >, < pos >, < minPulse >, < maxPulse >]
+        }
+    }
+</script>
+
+</body>
+</html>
