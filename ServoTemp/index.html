@@ -19,6 +19,15 @@
 		celsius = toCelsius(tempdata);
         document.getElementById("tempvalue").innerHTML = celsius;
 
+        // 慢速移動Servo
+        cpf.request('["servo_pos_speed", 8, 60, 30]');
+          //["servo_pos_speed", < 2~13 >, < targetPos >, < delay >]
+        // 快速移動Servo
+        cpf.request('["servo_pos", 8, 60]');
+          //["servo_pos", < 2~13 >, < targetPos >]
+
+        cpf.request('["tone_play", 6, 261, 300],["sleep", 300],["tone_play", 6, 293, 300],["sleep", 300],["tone_play", 6, 329, 300],["sleep", 300],["tone_play", 6, 349, 300],["sleep", 300],["tone_play", 6, 392, 300],["sleep", 300],["tone_play", 6, 440, 300],["sleep", 300],["tone_play", 6, 493, 300],["sleep", 300],["tone_play", 6, 349, 523]'); 
+          //["tone_play", < 2~13 > , < frequency >, < delay >]
     }
 
 
@@ -32,11 +41,13 @@
 
     function setup(){
         if(cpf){
-            //temperature
+            //Temperature
             cpf.setPinMode('["resetPin"],["setPinMode", "analog", 0, "INPUT"]');
-            //servo
+            //Servo
             cpf.setPinMode('["resetPin"],["servo_init", 8, 90, 500 , 2400]');
                //["servo_init", < 2~13 >, < pos >, < minPulse >, < maxPulse >]
+            //Buzzer
+            cpf.setPinMode('["resetPin"],["setPinMode", "digital", 6, "TONE"] ');
         }
     }
 </script>
