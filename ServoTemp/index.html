@@ -22,13 +22,13 @@
             document.getElementById("tempvalue").innerHTML = celsius;
 
             if(celsius < 20){
-                cpf.request('["servo_pos_speed", 8, 30, 60]');
+                cpf.request('["servo_pos", 8, 30]');
             }
             else if(celsius <25){
-                cpf.request('["servo_pos_speed", 8, 90, 60]');
+                cpf.request('["servo_pos", 8, 90]');
             }
             else{
-                cpf.request('["servo_pos_speed", 8, 150, 60]');
+                cpf.request('["servo_pos", 8, 150]');
             }
 
             // 慢速移動Servo
