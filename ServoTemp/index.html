@@ -16,6 +16,7 @@
     var lightdata;
     var tempdata;
 	var celsius;
+    var servodata = 90;
     setup();
 
 
@@ -27,16 +28,20 @@
             document.getElementById("lightvalue").innerHTML = lightdata;
             document.getElementById("tempvalue").innerHTML = celsius;
 
-            if(celsius <= 20){
+           if(celsius <= 25){
+				servodata =10;
                 cpf.request('["servo_pos_speed", 4, 10]');
             }
-            else if(celsius < 25 && celsius > 20){
+            else if(celsius <= 30 && celsius > 25){
+				servodata = 90;
                 cpf.request('["servo_pos_speed", 4, 90]');
             }
             else{
-                //cpf.request('["servo_pos", 8, 150]');
+                servodata = 170;
 				cpf.request('["servo_pos_speed", 4, 170]');
             }
+			
+			document.getElementById("servovalue").innerHTML = servodata;
 
             // 慢速移動Servo
             // cpf.request('["servo_pos_speed", 8, 60, 30]');
