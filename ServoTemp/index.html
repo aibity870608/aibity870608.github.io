@@ -16,6 +16,7 @@
 	var celsius;
     setup();
 
+
     function loop() {
 		if(cpf){
             tempdata = cpf.get("a1");
@@ -23,8 +24,6 @@
             document.getElementById("tempvalue").innerHTML = celsius;
 
             if(celsius < 20){
-
-
                 cpf.request('["servo_pos", 8, 30]');
             }
             else if(celsius <25){

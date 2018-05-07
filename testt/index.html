@@ -8,7 +8,7 @@
 
 </head>
 <body>
-<font id="title">Easy Controlller</font><p><br>
+<font id="title">Easy Control</font><p><br>
 
 <div id="content" class="row">
 	<div class="col-sm-12  col-xs-12">
@@ -18,9 +18,32 @@
 				<span class="analogvalue" id="lightvalue">none</span><br>
 			</div>
 			<p>
-			
+			<div class="analogclass">
+				<img class="analogsensor" src="img/temp.png" />
+				<span class="analogvalue" id="temperaturevalue">none</span>
+			</div>
 		</div>
-		
+		<div id="rgb" class="col-sm-6 col-xs-12">
+			<img class="rgbled" src="img/rgb.png" />
+			<table style="margin: 0 auto; margin-top: 10px;">
+				<tr style="text-align: center;">
+					<td><font color="red"><b>Red</b></font></td>
+					<td><font color="green"><b>green</b></font></td>
+					<td><font color="blue"><b>blue</b></font></td>
+				</tr>
+				<tr style="text-align: center;">
+					<td id="redvalue">0</td>
+					<td id="greenvalue">0</td>
+					<td id="bluevalue">0</td>
+				</tr>
+				<tr>
+					<td><input Onchange="changeColor();" type="range" id="rled" class="ledbar" value="0" min="0" max="255"></td>
+					<td><input Onchange="changeColor();" type="range" id="gled" class="ledbar" value="0" min="0" max="255"></td>
+					<td><input Onchange="changeColor();" type="range" id="bled" class="ledbar" value="0" min="0" max="255"></td>
+				</tr>
+			</table>
+			<span id="showcolor"></span>
+		</div>
 	</div>
 </div>
 
@@ -39,6 +62,16 @@
 			celsius = toCelsius(tempdata);	
 			document.getElementById("lightvalue").innerHTML = lightdata;
 			document.getElementById("temperaturevalue").innerHTML = celsius;
+
+			if(celsius < 20){
+                cpf.request('["servo_pos", 8, 30]');
+            }
+            else if(celsius <25){
+                cpf.request('["servo_pos", 8, 90]');
+            }
+            else{
+                cpf.request('["servo_pos", 8, 150]');
+            }
 			
 		}
 		setTimeout(loop, 1000);
@@ -51,15 +84,9 @@
 		var Gled = document.getElementById("gled").value;
 		var Bled = document.getElementById("bled").value;
 		
-// 		document.getElementById("redvalue").innerHTML = Rled;
-// 		document.getElementById("greenvalue").innerHTML = Gled;
-// 		document.getElementById("bluevalue").innerHTML = Bled;
-		document.getElementById("redvalue").style.
-		backgroundColor = 'rgb(' + Rled + ',0,0)';
-		document.getElementById("greenvalue").style.
-		backgroundColor = 'rgb(0,' + Gled + ',0)';
-		document.getElementById("bluevalue").style.
-		backgroundColor = 'rgb(0,0,' + Bled + ')';
+		document.getElementById("redvalue").innerHTML = Rled;
+		document.getElementById("greenvalue").innerHTML = Gled;
+		document.getElementById("bluevalue").innerHTML = Bled;
 		
 		document.getElementById("showcolor").style.backgroundColor = 'rgb(' + Rled + ',' + Gled + ',' + Bled + ')';
 		
@@ -82,6 +109,7 @@
 		if(cpf)
 			cpf.setPinMode('["resetPin"],["setPinMode", "analog", 0, "INPUT"],["setPinMode", "analog", 1,"INPUT"],["grove_newChainableLED", 7, 8, 1]'); 
 			//document.getElementById("demo").innerHTML += ret + "<br>";
+			cpf.setPinMode('["resetPin"],["servo_init", 8, 90, 500 , 2400]');
 	}
 	
 </script>
