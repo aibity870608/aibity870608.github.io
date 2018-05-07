@@ -51,7 +51,7 @@
 	
 	var lightdata;
 	var tempdata;
-	var celsius;
+	var celsius = 20;
 	setup();
 	// Analog
 	function loop() {
@@ -63,7 +63,7 @@
 			document.getElementById("lightvalue").innerHTML = lightdata;
 			document.getElementById("temperaturevalue").innerHTML = celsius;
 
-			if(celsius < 20){
+			if(celsius <= 20){
                 cpf.request('["servo_pos", 8, 30]');
             }
             else if(celsius < 25 && celsius > 20){
