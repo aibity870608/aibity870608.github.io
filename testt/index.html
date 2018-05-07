@@ -71,15 +71,15 @@
 
 			if(celsius <= 25){
 				servodata =10;
-                cpf.request('["servo_pos_speed", 4, 10]');
+                cpf.request('["servo_pos_speed", 4, 10, 30]');
             }
             else if(celsius <= 30 && celsius > 25){
 				servodata = 90;
-                cpf.request('["servo_pos_speed", 4, 90]');
+                cpf.request('["servo_pos_speed", 4, 90, 30]');
             }
             else{
                 servodata = 170;
-				cpf.request('["servo_pos_speed", 4, 170]');
+				cpf.request('["servo_pos_speed", 4, 170, 30]');
             }
 			
 			document.getElementById("servovalue").innerHTML = servodata;
