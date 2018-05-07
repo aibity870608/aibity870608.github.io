@@ -75,10 +75,10 @@
 				servodata =10;
                 cpf.request('["servo_pos", 8, 10]');
             }
-            else if(celsius <= 27 && celsius > 25){
-				servodata = 90;
-                cpf.request('["servo_pos", 8, 90]');
-            }
+            // else if(celsius <= 27 && celsius > 25){
+			// 	servodata = 90;
+            //     cpf.request('["servo_pos", 8, 90]');
+            // }
             else{
                 servodata = 170;
 				cpf.request('["servo_pos", 8, 170]');
