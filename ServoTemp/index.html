@@ -23,14 +23,15 @@
             celsius = toCelsius(tempdata);
             document.getElementById("tempvalue").innerHTML = celsius;
 
-            if(celsius < 20){
-                cpf.request('["servo_pos", 8, 30]');
+            if(celsius <= 20){
+                cpf.request('["servo_pos_speed", 4, 10]');
             }
-            else if(celsius <25){
-                cpf.request('["servo_pos", 8, 90]');
+            else if(celsius < 25 && celsius > 20){
+                cpf.request('["servo_pos_speed", 4, 90]');
             }
             else{
-                cpf.request('["servo_pos", 8, 150]');
+                //cpf.request('["servo_pos", 8, 150]');
+				cpf.request('["servo_pos_speed", 4, 170]');
             }
 
             // 慢速移動Servo
@@ -68,7 +69,7 @@
             //Temperature
             cpf.setPinMode('["resetPin"],["setPinMode", "analog", 1, "INPUT"]');
             //Servo
-            cpf.setPinMode('["resetPin"],["servo_init", 8, 90, 500 , 2400]');
+            cpf.setPinMode('["resetPin"],["servo_init", 4, 90, 500 , 2400]');
                //["servo_init", < 2~13 >, < pos >, < minPulse >, < maxPulse >]
             //Buzzer
             cpf.setPinMode('["resetPin"],["setPinMode", "digital", 6, "TONE"] ');
