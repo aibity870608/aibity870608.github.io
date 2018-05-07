@@ -29,16 +29,16 @@
             document.getElementById("lightvalue").innerHTML = lightdata;
             document.getElementById("tempvalue").innerHTML = celsius;
 
-           if(celsius <= 25){
+           if(lightdata <= 400){
 				servodata =10;
                 cpf.request('["servo_pos_speed", 4, 10]');
             }
-            else if(celsius <= 30 && celsius > 25){
+            else if(lightdata <= 600 && lightdata > 400){
 				servodata = 90;
                 cpf.request('["servo_pos_speed", 4, 90]');
             }
             else{
-                servodata = 170;
+                lightdata = 170;
 				cpf.request('["servo_pos_speed", 4, 170]');
             }
 			
