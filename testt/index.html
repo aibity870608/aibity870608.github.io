@@ -68,20 +68,20 @@
 			document.getElementById("lightvalue").innerHTML = lightdata;
 			document.getElementById("temperaturevalue").innerHTML = celsius;
 			cpf.request('["servo_pos_speed", 8, 90, 30]');
-			servodata =90;
+			servodata =180;
 
-			if(celsius <= 25){
-				servodata =10;
-                cpf.request('["servo_pos_speed", 8, 10, 30]');
-            }
-            else if(celsius <= 27 && celsius > 25){
-				servodata = 90;
-                cpf.request('["servo_pos_speed", 8, 90, 30]');
-            }
-            else{
-                servodata = 170;
-				cpf.request('["servo_pos_speed", 8, 170, 30]');
-            }
+			// if(celsius <= 25){
+			// 	servodata =10;
+            //     cpf.request('["servo_pos_speed", 8, 10, 30]');
+            // }
+            // else if(celsius <= 27 && celsius > 25){
+			// 	servodata = 90;
+            //     cpf.request('["servo_pos_speed", 8, 90, 30]');
+            // }
+            // else{
+            //     servodata = 170;
+			// 	cpf.request('["servo_pos_speed", 8, 170, 30]');
+            // }
 			
 			document.getElementById("servovalue").innerHTML = servodata;
 		}
