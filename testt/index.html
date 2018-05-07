@@ -71,15 +71,15 @@
 
 			if(celsius <= 25){
 				servodata =10;
-                cpf.request('["servo_pos_speed", 2, 10, 30]');
+                cpf.request('["servo_pos_speed", 3, 10, 30]');
             }
             else if(celsius <= 30 && celsius > 25){
 				servodata = 90;
-                cpf.request('["servo_pos_speed", 2, 90, 30]');
+                cpf.request('["servo_pos_speed", 3, 90, 30]');
             }
             else{
                 servodata = 170;
-				cpf.request('["servo_pos_speed", 2, 170, 30]');
+				cpf.request('["servo_pos_speed", 3, 170, 30]');
             }
 			
 			document.getElementById("servovalue").innerHTML = servodata;
@@ -120,7 +120,7 @@
 			cpf.setPinMode('["resetPin"],["setPinMode", "analog", 0, "INPUT"],["setPinMode", "analog", 1,"INPUT"],["grove_newChainableLED", 7, 8, 1]'); 
 			//document.getElementById("demo").innerHTML += ret + "<br>";
 			//cpf.setPinMode('["resetPin"],["servo_init", 8, 90, 500 , 2400]');
-			cpf.setPinMode('["resetPin"], ["servo_init", 2, 90, 900, 2100]');
+			cpf.setPinMode('["resetPin"], ["servo_init", 3, 90, 900, 2100]');
 
 	}
 	
