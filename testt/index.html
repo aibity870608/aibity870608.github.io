@@ -22,6 +22,10 @@
 				<img class="analogsensor" src="img/temp.png" />
 				<span class="analogvalue" id="temperaturevalue">none</span>
 			</div>
+			<div class="analogclass">
+				<img class="analogsensor" src="img/temp.png" />
+				<span class="analogvalue" id="servovalue">none</span>
+			</div>
 		</div>
 		<div id="rgb" class="col-sm-6 col-xs-12">
 			<img class="rgbled" src="img/rgb.png" />
@@ -52,6 +56,7 @@
 	var lightdata;
 	var tempdata;
 	var celsius = 20;
+	var servodata = 90;
 	setup();
 	// Analog
 	function loop() {
@@ -63,28 +68,21 @@
 			document.getElementById("lightvalue").innerHTML = lightdata;
 			document.getElementById("temperaturevalue").innerHTML = celsius;
 
-			// if(celsius <= 20){
-            //     cpf.request('["servo_pos", 8, 30]');
-            // }
-            // else if(celsius < 25 && celsius > 20){
-            //     cpf.request('["servo_pos", 8, 90]');
-            // }
-            // else{
-            //     cpf.request('["servo_pos", 8, 150]');
-			// 	//cpf.request('["servo_pos_speed", 4, 60]');
-            // }
 
 			if(celsius <= 25){
+				servodata =10;
                 cpf.request('["servo_pos_speed", 8, 10]');
             }
-            else if(celsius < 30 && celsius > 25){
+            else if(celsius <= 30 && celsius > 25){
+				servodata = 90;
                 cpf.request('["servo_pos_speed", 8, 90]');
             }
             else{
-                //cpf.request('["servo_pos", 8, 150]');
+                servodata = 170;
 				cpf.request('["servo_pos_speed", 8, 170]');
             }
 			
+			document.getElementById("servovalue").innerHTML = servodata;
 		}
 		setTimeout(loop, 1000);
 	}
