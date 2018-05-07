@@ -7,11 +7,13 @@
     <title>Servo and Temperature</title>
 </head>
 <body>
+    <span class="analogvalue" id="lightvalue">none</span>
     <span class="analogvalue" id="tempvalue">none</span>
     <span class="analogvalue" id="tempvalue2">none</span><br/>
     <button onclick="getTemp();">get Temperature</button>
     
 <script>
+    var lightdata;
     var tempdata;
 	var celsius;
     setup();
@@ -19,8 +21,10 @@
 
     function loop() {
 		if(cpf){
+            lightdata = cpf.get("a0");
             tempdata = cpf.get("a1");
             celsius = toCelsius(tempdata);
+            document.getElementById("lightvalue").innerHTML = lightdata;
             document.getElementById("tempvalue").innerHTML = celsius;
 
             if(celsius <= 20){
@@ -53,6 +57,12 @@
         celsius = toCelsius(tempdata);
         document.getElementById("tempvalue2").innerHTML = celsius;
     }
+
+    function getLight(){
+        tempdata = cpf.get("a0");
+        celsius = toCelsius(tempdata);
+        document.getElementById("lightvalue").innerHTML = celsius;
+    }
     
 
 
@@ -67,12 +77,12 @@
     function setup(){
         if(cpf){
             //Temperature
-            cpf.setPinMode('["resetPin"],["setPinMode", "analog", 1, "INPUT"]');
+            cpf.setPinMode('["resetPin"],["setPinMode", "analog", 0, "INPUT"]');
             //Servo
             cpf.setPinMode('["resetPin"],["servo_init", 4, 90, 500 , 2400]');
                //["servo_init", < 2~13 >, < pos >, < minPulse >, < maxPulse >]
             //Buzzer
-            cpf.setPinMode('["resetPin"],["setPinMode", "digital", 6, "TONE"] ');
+            //cpf.setPinMode('["resetPin"],["setPinMode", "digital", 6, "TONE"] ');
         }
     }
 </script>
