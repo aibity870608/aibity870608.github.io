@@ -67,7 +67,8 @@
 			celsius = toCelsius(tempdata);	
 			document.getElementById("lightvalue").innerHTML = lightdata;
 			document.getElementById("temperaturevalue").innerHTML = celsius;
-
+			cpf.request('["servo_pos_speed", 8, 90, 30]');
+			servodata =90;
 
 			if(celsius <= 25){
 				servodata =10;
