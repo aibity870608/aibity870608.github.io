@@ -74,10 +74,10 @@
 			// 	//cpf.request('["servo_pos_speed", 4, 60]');
             // }
 
-			if(celsius <= 20){
+			if(celsius <= 25){
                 cpf.request('["servo_pos_speed", 4, 10]');
             }
-            else if(celsius < 25 && celsius > 20){
+            else if(celsius < 30 && celsius > 25){
                 cpf.request('["servo_pos_speed", 4, 90]');
             }
             else{
