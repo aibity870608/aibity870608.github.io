@@ -69,11 +69,11 @@
 			document.getElementById("temperaturevalue").innerHTML = celsius;
 			cpf.request('["servo_pos", 8, 180]');
 			servodata =180;
-			sleep(2);
+	
 
 			// if(celsius <= 25){
 			// 	servodata =10;
-                 cpf.request('["servo_pos_speed", 8, 10, 30]');
+                 cpf.request('["servo_pos", 8, 10]');
             // }
             // else if(celsius <= 27 && celsius > 25){
 			// 	servodata = 90;
@@ -89,11 +89,7 @@
 		setTimeout(loop, 1000);
 	}
 	loop();
-	
-	function sleep(sec) {
-		var time = new Date().getTime();
-		while(new Date().getTime() - time < sec * 1000);
-	}
+
 
 	// RGB
 	function changeColor() {
