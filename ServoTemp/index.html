@@ -22,21 +22,21 @@
             celsius = toCelsius(tempdata);
             document.getElementById("tempvalue").innerHTML = celsius;
 
-            if(celsius < 20){
-                cpf.request('["servo_pos", 8, 30]');
-            }
-            else if(celsius <25){
-                cpf.request('["servo_pos", 8, 90]');
-            }
-            else{
-                cpf.request('["servo_pos", 8, 150]');
-            }
+//             if(celsius < 20){
+//                 cpf.request('["servo_pos", 8, 30]');
+//             }
+//             else if(celsius <25){
+//                 cpf.request('["servo_pos", 8, 90]');
+//             }
+//             else{
+//                 cpf.request('["servo_pos", 8, 150]');
+//             }
 
             // 慢速移動Servo
             // cpf.request('["servo_pos_speed", 8, 60, 30]');
             //["servo_pos_speed", < 2~13 >, < targetPos >, < delay >]
             // 快速移動Servo
-            // cpf.request('["servo_pos", 8, 60]');
+             cpf.request('["servo_pos", 8, 60]');
             //["servo_pos", < 2~13 >, < targetPos >]
 
             // cpf.request('["tone_play", 6, 261, 300],["sleep", 300],["tone_play", 6, 293, 300],["sleep", 300],["tone_play", 6, 329, 300],["sleep", 300],["tone_play", 6, 349, 300],["sleep", 300],["tone_play", 6, 392, 300],["sleep", 300],["tone_play", 6, 440, 300],["sleep", 300],["tone_play", 6, 493, 300],["sleep", 300],["tone_play", 6, 349, 523]'); 
