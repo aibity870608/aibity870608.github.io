@@ -67,13 +67,13 @@
 			celsius = toCelsius(tempdata);	
 			document.getElementById("lightvalue").innerHTML = lightdata;
 			document.getElementById("temperaturevalue").innerHTML = celsius;
-			cpf.request('["servo_pos", 8, 180]');
-			servodata =180;
+			cpf.request('["analogWrite", 8, 90]');
+			servodata =90;
 	
 
 			if(celsius <= 25){
 				servodata =10;
-                cpf.request('["servo_pos", 8, 10]');
+                cpf.request('["analogWrite", 8, 10]');
             }
             // else if(celsius <= 27 && celsius > 25){
 			// 	servodata = 90;
@@ -81,7 +81,7 @@
             // }
             else{
                 servodata = 170;
-				cpf.request('["servo_pos", 8, 170]');
+				cpf.request('["analogWrite", 8, 170]');
             }
 			
 			document.getElementById("servovalue").innerHTML = servodata;
@@ -123,7 +123,7 @@
 			cpf.setPinMode('["resetPin"],["setPinMode", "analog", 0, "INPUT"],["setPinMode", "analog", 1,"INPUT"],["grove_newChainableLED", 7, 8, 1]'); 
 			//document.getElementById("demo").innerHTML += ret + "<br>";
 			//cpf.setPinMode('["resetPin"],["servo_init", 8, 90, 500 , 2400]');
-			cpf.setPinMode('["resetPin"], ["servo_init", 8, 90, 900, 2100]');
+			["setPinMode", "digital", 8, "SERVO"]
 
 	}
 	
