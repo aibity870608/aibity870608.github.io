@@ -8,6 +8,7 @@
 </head>
 <body>
     <span class="analogvalue" id="tempvalue">none</span>
+    <button onclick="getTemp();">get Temperature</button>
     
 <script>
     var tempdata;
@@ -33,6 +34,12 @@
 		setTimeout(loop, 1000);
 	}
 	loop();
+
+    function getTemp(){
+        tempdata = cpf.get("a0");
+        celsius = toCelsius(tempdata);
+        document.getElementById("tempvalue").innerHTML = celsius;
+    }
     
 
 
