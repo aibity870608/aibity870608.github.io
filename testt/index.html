@@ -14,17 +14,17 @@
 	<div class="col-sm-12  col-xs-12">
 		<div id="analog" class="col-sm-6 col-xs-12">
 			<div class="analogclass">
-				<!-- <img class="analogsensor" src="img/light.png" /> -->
+				<img class="analogsensor" src="img/light.png" />
 				<span class="analogvalue" id="lightvalue">none</span><br>
 			</div>
 			<p>
 			<div class="analogclass">
-				<!-- <img class="analogsensor" src="img/temp.png" /> -->
+				<img class="analogsensor" src="img/temp.png" />
 				<span class="analogvalue" id="temperaturevalue">none</span>
 			</div>
 		</div>
 		<div id="rgb" class="col-sm-6 col-xs-12">
-			<!-- <img class="rgbled" src="img/rgb.png" /> -->
+			<img class="rgbled" src="img/rgb.png" />
 			<table style="margin: 0 auto; margin-top: 10px;">
 				<tr style="text-align: center;">
 					<td><font color="red"><b>Red</b></font></td>
@@ -66,11 +66,12 @@
 			if(celsius < 20){
                 cpf.request('["servo_pos", 8, 30]');
             }
-            else if(celsius <25){
+            else if(celsius < 25 && celsius > 20){
                 cpf.request('["servo_pos", 8, 90]');
             }
             else{
                 cpf.request('["servo_pos", 8, 150]');
+				//cpf.request(‘[“servo_pos_speed”, 4, 60]’);//
             }
 			
 		}
@@ -110,6 +111,8 @@
 			cpf.setPinMode('["resetPin"],["setPinMode", "analog", 0, "INPUT"],["setPinMode", "analog", 1,"INPUT"],["grove_newChainableLED", 7, 8, 1]'); 
 			//document.getElementById("demo").innerHTML += ret + "<br>";
 			cpf.setPinMode('["resetPin"],["servo_init", 8, 90, 500 , 2400]');
+			//cpf.setPinMode('["resetPin"], ["servo_init", 4, 90, 900, 2100]');
+
 	}
 	
 </script>
