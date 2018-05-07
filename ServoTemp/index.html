@@ -14,21 +14,26 @@
 	var celsius;
     setup();
 
-    if(cpf){
-        tempdata = cpf.get("a0");
-		celsius = toCelsius(tempdata);
-        document.getElementById("tempvalue").innerHTML = celsius;
+    function loop() {
+		if(cpf){
+            tempdata = cpf.get("a0");
+            celsius = toCelsius(tempdata);
+            document.getElementById("tempvalue").innerHTML = celsius;
 
-        // 慢速移動Servo
-        cpf.request('["servo_pos_speed", 8, 60, 30]');
-          //["servo_pos_speed", < 2~13 >, < targetPos >, < delay >]
-        // 快速移動Servo
-        cpf.request('["servo_pos", 8, 60]');
-          //["servo_pos", < 2~13 >, < targetPos >]
+            // 慢速移動Servo
+            cpf.request('["servo_pos_speed", 8, 60, 30]');
+            //["servo_pos_speed", < 2~13 >, < targetPos >, < delay >]
+            // 快速移動Servo
+            cpf.request('["servo_pos", 8, 60]');
+            //["servo_pos", < 2~13 >, < targetPos >]
 
-        cpf.request('["tone_play", 6, 261, 300],["sleep", 300],["tone_play", 6, 293, 300],["sleep", 300],["tone_play", 6, 329, 300],["sleep", 300],["tone_play", 6, 349, 300],["sleep", 300],["tone_play", 6, 392, 300],["sleep", 300],["tone_play", 6, 440, 300],["sleep", 300],["tone_play", 6, 493, 300],["sleep", 300],["tone_play", 6, 349, 523]'); 
-          //["tone_play", < 2~13 > , < frequency >, < delay >]
-    }
+            cpf.request('["tone_play", 6, 261, 300],["sleep", 300],["tone_play", 6, 293, 300],["sleep", 300],["tone_play", 6, 329, 300],["sleep", 300],["tone_play", 6, 349, 300],["sleep", 300],["tone_play", 6, 392, 300],["sleep", 300],["tone_play", 6, 440, 300],["sleep", 300],["tone_play", 6, 493, 300],["sleep", 300],["tone_play", 6, 349, 523]'); 
+            //["tone_play", < 2~13 > , < frequency >, < delay >]
+        }
+		setTimeout(loop, 1000);
+	}
+	loop();
+    
 
 
     // Temperature
