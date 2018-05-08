@@ -24,7 +24,6 @@
 	</div>
 	
 	<script>
-		var lightdata;
 		var tempdata;
 		var celsius = 20;
 		var degree = 0;
@@ -40,14 +39,12 @@
 					degree = Math.floor((180/80)*celsius+67.5);
 					document.getElementById("pointer").style.transform = "rotate("+degree+"deg)";
 					document.getElementById("degree").innerHTML = degree;
-					// console.log("degree: "+degree);
+					
 					cpf.request('["analogWrite", 4,'+Math.abs(degree-180)+']');
 					
 				}
 				
-	
-				
-				// document.getElementById("servovalue").innerHTML = celsius+"度C/"+degree+"角度";
+
 			}
 			setTimeout(loop, 1000);
 		}
@@ -63,7 +60,7 @@
 		// cpf setup
 		function setup(){
 			if(cpf){
-				cpf.setPinMode('["resetPin"],["setPinMode", "analog", 0, "INPUT"],["setPinMode", "analog", 1,"INPUT"], ["setPinMode", "digital", 4, "SERVO"]');
+				cpf.setPinMode('["resetPin"] ,["setPinMode", "analog", 1,"INPUT"], ["setPinMode", "digital", 4, "SERVO"]');
 			}
 		}
 		
