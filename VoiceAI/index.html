@@ -16,6 +16,7 @@
     <br/>
     
 <script>
+    var i;
     var clickbtn = document.getElementById("clickbtn");
     var clickbtncn = document.getElementById("clickbtncn");
 
@@ -67,36 +68,55 @@
     function GetRecognizeResult(Result,Type){
     　　　console.log('Result = ' + Result);
     　　　if(Result.includes("hello")) {
+            cpf.request('["grove_rgblcd_set_rgb", 0, 0, 255]');
             cpf.request('["grove_rgblcd_clear"]');
             cpf.request('["grove_rgblcd_print", 0, 0, "Hello" ]');
             document.getElementById("words").innerHTML = "Hello " + Result;
             cpf.SetSpeech("On", "en-US", Result, 0.1, 0.1);
 
     　　　} else if (Result.includes("name")) {
+            cpf.request('["grove_rgblcd_set_rgb", 0, 0, 255]');
             cpf.request('["grove_rgblcd_clear"]');
             cpf.request('["grove_rgblcd_print", 0, 0, "your name is"' + Result + ']');
             document.getElementById("words").innerHTML = "your name is " + Result;
             cpf.SetSpeech("On", "en-US", Result, 1, 0.1);
             
          } else if (Result.includes("你好")) {
+            cpf.request('["grove_rgblcd_set_rgb", 0, 255, 0]');
             cpf.request('["grove_rgblcd_clear"]');
             cpf.request('["grove_rgblcd_print", 0, 0, "how are you"]');
             document.getElementById("words").innerHTML = "how are you " + Result;
             cpf.SetSpeech("On", "cmn-Hant-TW", "早安" + Result, 1, 1);
 
          } else if (Result.includes("測試")) {
+            cpf.request('["grove_rgblcd_set_rgb", 0, 255, 0]');
             cpf.request('["grove_rgblcd_clear"]');
             cpf.request('["grove_rgblcd_print", 0, 0, "test"]');
             document.getElementById("words").innerHTML = "test " + Result;
             cpf.SetSpeech("On", "cmn-Hant-TW", Result, 2, 1);
 
          } else if (Result.includes("测试")) {
+            cpf.request('["grove_rgblcd_set_rgb", 0, 255, 0]');
             cpf.request('["grove_rgblcd_clear"]');
             cpf.request('["grove_rgblcd_print", 0, 0, "test123"]');
             document.getElementById("words").innerHTML = "test123 " + Result;
             cpf.SetSpeech("On", "cmn-Hant-TW", Result, 2, 2);
 
+         } else if (Result.includes("開燈")) {
+            cpf.request('["grove_rgblcd_set_rgb", 0, 255, 0]');
+            cpf.request('["grove_rgblcd_clear"]');
+            cpf.request('["grove_rgblcd_print", 0, 0, "light on"]');
+            document.getElementById("words").innerHTML = "請幫我 " + Result;
+            for(i=0; i<255; i+=10){
+                cpf.request(["analogWrite", 3, i]);
+            }
+            for(i=255; i>0; i-=10){
+                cpf.request(["analogWrite", 3, i]);
+            }
+            cpf.SetSpeech("On", "cmn-Hant-TW", Result, 2, 2);
+
          } else {
+            cpf.request('["grove_rgblcd_set_rgb", 255, 0, 0]');
             cpf.request('["grove_rgblcd_clear"]');
             document.getElementById("words").innerHTML = "nothing " + Result;
          }
@@ -104,7 +124,7 @@
     
     function setup(){
         if(cpf)
-            cpf.setPinMode('["resetPin"],["grove_rgblcd_begin", 16, 2]');
+            cpf.setPinMode('["resetPin"],["grove_rgblcd_begin", 16, 2], ["setPinMode", "digital", 3, "PWM"]');
     }
 </script>
 </body>
