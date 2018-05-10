@@ -13,6 +13,7 @@
     <p id="words">none</p>
 
     <button id="clickbtncn">clickcn</button>
+    <p id="light">light</p>
     <br/>
     
 <script>
@@ -108,11 +109,13 @@
             cpf.request('["grove_rgblcd_print", 0, 0, "light on"]');
             document.getElementById("words").innerHTML = "請幫我 " + Result;
             for(i=0; i<255; i+=10){
-                cpf.request(["analogWrite", 3, i]);
+                cpf.request(["analogWrite", 7, i]);
+                ocument.getElementById("light").innerHTML = i;
             }
             for(i=255; i>0; i-=10){
-                cpf.request(["analogWrite", 3, i]);
+                cpf.request(["analogWrite", 7, i]);
             }
+            cpf.request(["digitalWrite", 3, 1]);
             cpf.SetSpeech("On", "cmn-Hant-TW", Result, 2, 2);
 
          } else {
@@ -124,7 +127,7 @@
     
     function setup(){
         if(cpf)
-            cpf.setPinMode('["resetPin"],["grove_rgblcd_begin", 16, 2], ["setPinMode", "digital", 3, "PWM"]');
+            cpf.setPinMode('["resetPin"],["grove_rgblcd_begin", 16, 2], ["setPinMode", "digital", 3, "OUTPUT"], ["setPinMode", "digital", 7, "PWM"]');
     }
 </script>
 </body>
