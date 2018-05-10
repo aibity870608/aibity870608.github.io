@@ -70,28 +70,36 @@
     　　　if(Result.includes("hello")) {
             cpf.request('["grove_rgblcd_clear"]');
             cpf.request('["grove_rgblcd_print", 0, 1, "Hello"]');
-            document.getElementById("words").innerHTML = "Hello";
+            document.getElementById("words").innerHTML = "Hello " + Result;
             cpf.SetSpeech("On", "en-US", Result, 0.1, 0.1);
 
     　　　} else if (Result.includes("name")) {
             cpf.request('["grove_rgblcd_clear"]');
             cpf.request('["grove_rgblcd_print", 0, 0, "your name is"]');
-            document.getElementById("words").innerHTML = "your name is";
+            document.getElementById("words").innerHTML = "your name is " + Result;
             cpf.SetSpeech("On", "en-US", Result, 0.1, 0.1);
             
          } else if (Result.includes("你好")) {
             cpf.request('["grove_rgblcd_clear"]');
             cpf.request('["grove_rgblcd_print", 0, 0, "how are you"]');
-            document.getElementById("words").innerHTML = "how are you";
-            cpf.SetSpeech("On", Result, 0.1, 0.1);
+            document.getElementById("words").innerHTML = "how are you " + Result;
+            cpf.SetSpeech("On", "cmn-Hant-TW", Result, 0.1, 0.1);
+
          } else if (Result.includes("測試")) {
             cpf.request('["grove_rgblcd_clear"]');
             cpf.request('["grove_rgblcd_print", 0, 0, "test"]');
-            document.getElementById("words").innerHTML = "test";
-            cpf.SetSpeech("On", Result, 1, 0.1);
+            document.getElementById("words").innerHTML = "test " + Result;
+            cpf.SetSpeech("On", "cmn-Hant-TW", Result, 1, 0.1);
+
+         } else if (Result.includes("测试")) {
+            cpf.request('["grove_rgblcd_clear"]');
+            cpf.request('["grove_rgblcd_print", 0, 0, "test123"]');
+            document.getElementById("words").innerHTML = "test123 " + Result;
+            cpf.SetSpeech("On", "cmn-Hant-TW", Result, 1, 0.1);
+
          } else {
             cpf.request('["grove_rgblcd_clear"]');
-            document.getElementById("words").innerHTML = "nothing";
+            document.getElementById("words").innerHTML = "nothing " + Result;
          }
     }
     
