@@ -69,33 +69,33 @@
     　　　console.log('Result = ' + Result);
     　　　if(Result.includes("hello")) {
             cpf.request('["grove_rgblcd_clear"]');
-            cpf.request('["grove_rgblcd_print", 0, 0, "Hello"]');
+            cpf.request('["grove_rgblcd_print", 0, 0, "Hello' + Result + ']');
             document.getElementById("words").innerHTML = "Hello " + Result;
             cpf.SetSpeech("On", "en-US", Result, 0.1, 0.1);
 
     　　　} else if (Result.includes("name")) {
             cpf.request('["grove_rgblcd_clear"]');
-            cpf.request('["grove_rgblcd_print", 0, 0, "your name is"]');
+            cpf.request('["grove_rgblcd_print", 0, 0, "your name is"' + Result + ']');
             document.getElementById("words").innerHTML = "your name is " + Result;
-            cpf.SetSpeech("On", "en-US", Result, 0.1, 0.1);
+            cpf.SetSpeech("On", "en-US", Result, 1, 0.1);
             
          } else if (Result.includes("你好")) {
             cpf.request('["grove_rgblcd_clear"]');
             cpf.request('["grove_rgblcd_print", 0, 0, "how are you"]');
             document.getElementById("words").innerHTML = "how are you " + Result;
-            cpf.SetSpeech("On", "en-US", "Hello", 0.1, 0.1);
+            cpf.SetSpeech("On", "cmn-Hant-TW", "早安" + Result, 1, 1);
 
          } else if (Result.includes("測試")) {
             cpf.request('["grove_rgblcd_clear"]');
             cpf.request('["grove_rgblcd_print", 0, 0, "test"]');
             document.getElementById("words").innerHTML = "test " + Result;
-            cpf.SetSpeech("On", "cmn-Hant-TW", Result, 1, 0.1);
+            cpf.SetSpeech("On", "cmn-Hant-TW", Result, 2, 1);
 
          } else if (Result.includes("测试")) {
             cpf.request('["grove_rgblcd_clear"]');
             cpf.request('["grove_rgblcd_print", 0, 0, "test123"]');
             document.getElementById("words").innerHTML = "test123 " + Result;
-            cpf.SetSpeech("On", "cmn-Hant-TW", Result, 1, 0.1);
+            cpf.SetSpeech("On", "cmn-Hant-TW", Result, 2, 2);
 
          } else {
             cpf.request('["grove_rgblcd_clear"]');
