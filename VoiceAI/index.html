@@ -40,7 +40,7 @@
     // It will read aloud the word "Good" once.
 
     clickbtn.addEventListener('click', function(event) {
-        cpf.initSpeechRecognition("cmn-Hans-CN");
+        cpf.initSpeechRecognition("en-US");
     　　　// Start speech recognition function with English language
         GetRecognitionListenStatus(true);
     });
@@ -56,13 +56,13 @@
 
     function GetRecognizeResult(Result,Type){
     　　　console.log('Result = ' + Result);
-    　　　if(Result.includes("你好")) {
+    　　　if(Result.includes("hello")) {
             cpf.request('["grove_rgblcd_clear"]');
             cpf.request('["grove_rgblcd_print", 0, 1, "Hello"]');
             document.getElementById("words").innerHTML = "Hello";
             cpf.SetSpeech("On", "en-US", Result, 0.1, 0.1);
 
-    　　　} else if (Result.includes("名字")) {
+    　　　} else if (Result.includes("name")) {
             cpf.request('["grove_rgblcd_clear"]');
             cpf.request('["grove_rgblcd_print", 0, 0, "your name is"]');
             document.getElementById("words").innerHTML = "your name is";
