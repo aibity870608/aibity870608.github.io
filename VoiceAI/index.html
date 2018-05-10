@@ -7,6 +7,69 @@
     <title>VoiceAI</title>
 </head>
 <body>
+    <h1>Voice AI</h1>
+    <button id="clickbtn">click</button>
+    <br/>
+    <p id="words">none</p>
     
+<script>
+    var clickbtn = document.getElementById("clickbtn");
+
+    setup();
+
+    //設定LCD背光顏色
+    cpf.request('["grove_rgblcd_set_rgb", 255, 0, 0]');
+    //設定文字
+    //cpf.request('["grove_rgblcd_print", 0, 1, "Hello World"]');
+    //清空文字
+    //cpf.request('["grove_rgblcd_clear"]');
+    //不顯示文字（不會清空文字）
+    //cpf.request('["grove_rgblcd_display", 0]');
+    //顯示文字
+    //cpf.request('["grove_rgblcd_display", 1]');
+
+    //cpf.SetSpeech(Enable, Language, Content, Pitch, SpeechRate);
+    //cpf.SetSpeech("On", "en-US", "Hello", 0.1, 0.1);
+    // If this SetSpeech function had been set to "On", when SpeechRecognition function is called, device will repeat the voice.
+
+    //cpf.SetSpeech("Off", "", "", "", "");
+    // When set the parameter to "Off", it will disable the repeat behavior.
+
+    //cpf.SetSpeech("Off", "en-US", "Good", 0.1, 0.1);
+    // It will read aloud the word "Good" once.
+
+    clickbtn.addEventListener('click', function(event) {
+        cpf.initSpeechRecognition("en-US");
+    　　　// Start speech recognition function with English language
+        GetRecognitionListenStatus(true);
+    });
+
+    function GetRecognitionListenStatus(Status){
+    　　　console.log('Listen status = ' + Status);
+    　　　if (Status == "true"){
+    　　　　　//do somethining
+    　　　}else{
+    　　　　　//do somethining
+    　　　}
+    }
+
+    function GetRecognizeResult(Result,Type){
+    　　　console.log('Result = ' + Result);
+    　　　if(Result.includes("say hello")) {
+            cpf.request('["grove_rgblcd_print", 0, 1, "Hello"]');
+            document.getElementById("words").innerHTML = "Hello";
+            cpf.SetSpeech("On", "en-US", Result, 0.1, 0.1);
+
+    　　　} else if (Result.includes("name")) {
+            cpf.request('["grove_rgblcd_print", 0, 1, "your name is"]');
+            document.getElementById("words").innerHTML = "your name is";
+         }
+    }
+    
+    function setup(){
+        if(cpf)
+            cpf.setPinMode('["resetPin"],["grove_rgblcd_begin", 16, 2]');
+    }
+</script>
 </body>
 </html>
