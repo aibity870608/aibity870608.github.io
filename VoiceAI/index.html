@@ -66,6 +66,10 @@
             cpf.request('["grove_rgblcd_clear"]');
             cpf.request('["grove_rgblcd_print", 0, 0, "your name is"]');
             document.getElementById("words").innerHTML = "your name is";
+            cpf.SetSpeech("On", "en-US", Result, 0.1, 0.1);
+         } else {
+            cpf.request('["grove_rgblcd_clear"]');
+            document.getElementById("words").innerHTML = "nothing";
          }
     }
     
