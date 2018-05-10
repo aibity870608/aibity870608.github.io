@@ -22,6 +22,8 @@
     var clickbtncn = document.getElementById("clickbtncn");
 
     setup();
+    cpf.request('["grove_setColorRGB", 0, 0, 0, 0]');
+    cpf.request(["digitalWrite", 3, 0]);
 
     //設定LCD背光顏色
     cpf.request('["grove_rgblcd_set_rgb", 0, 0, 255]');
@@ -109,11 +111,12 @@
             cpf.request('["grove_rgblcd_print", 0, 0, "light on"]');
             document.getElementById("words").innerHTML = "請幫我 " + Result;
             for(i=0; i<255; i+=10){
-                cpf.request(["analogWrite", 7, i]);
-                ocument.getElementById("light").innerHTML = i;
+                cpf.request('["grove_setColorRGB", 0, 0, 0, i]');
+                document.getElementById("light").innerHTML = i;
             }
             for(i=255; i>0; i-=10){
-                cpf.request(["analogWrite", 7, i]);
+                cpf.request('["grove_setColorRGB", 0, 0, 0, i]');
+                document.getElementById("light").innerHTML = i;
             }
             cpf.request(["digitalWrite", 3, 1]);
             cpf.SetSpeech("On", "cmn-Hant-TW", Result, 2, 2);
@@ -127,7 +130,7 @@
     
     function setup(){
         if(cpf)
-            cpf.setPinMode('["resetPin"],["grove_rgblcd_begin", 16, 2], ["setPinMode", "digital", 3, "OUTPUT"], ["setPinMode", "digital", 7, "PWM"]');
+            cpf.setPinMode('["resetPin"],["grove_rgblcd_begin", 16, 2], ["setPinMode", "digital", 3, "OUTPUT"], ["grove_newChainableLED",7, 8, 1]');
     }
 </script>
 </body>
