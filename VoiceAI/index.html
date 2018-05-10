@@ -68,7 +68,7 @@
     　　　console.log('Result = ' + Result);
     　　　if(Result.includes("hello")) {
             cpf.request('["grove_rgblcd_clear"]');
-            cpf.request('["grove_rgblcd_print", 0, 0, '+Result+' Hello ]');
+            cpf.request('["grove_rgblcd_print", 0, 0, "Hello" ]');
             document.getElementById("words").innerHTML = "Hello " + Result;
             cpf.SetSpeech("On", "en-US", Result, 0.1, 0.1);
 
