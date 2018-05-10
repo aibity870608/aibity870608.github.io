@@ -20,6 +20,7 @@
     //設定LCD背光顏色
     cpf.request('["grove_rgblcd_set_rgb", 255, 0, 0]');
     //設定文字
+    //["grove_rgblcd_print", < column : 0~16 >, < row : 0 or 1 >, < text >] 
     //cpf.request('["grove_rgblcd_print", 0, 1, "Hello World"]');
     //清空文字
     //cpf.request('["grove_rgblcd_clear"]');
@@ -39,7 +40,7 @@
     // It will read aloud the word "Good" once.
 
     clickbtn.addEventListener('click', function(event) {
-        cpf.initSpeechRecognition("en-US");
+        cpf.initSpeechRecognition("cmn-Hans-CN");
     　　　// Start speech recognition function with English language
         GetRecognitionListenStatus(true);
     });
@@ -55,13 +56,15 @@
 
     function GetRecognizeResult(Result,Type){
     　　　console.log('Result = ' + Result);
-    　　　if(Result.includes("say hello")) {
+    　　　if(Result.includes("你好")) {
+            cpf.request('["grove_rgblcd_clear"]');
             cpf.request('["grove_rgblcd_print", 0, 1, "Hello"]');
             document.getElementById("words").innerHTML = "Hello";
             cpf.SetSpeech("On", "en-US", Result, 0.1, 0.1);
 
-    　　　} else if (Result.includes("name")) {
-            cpf.request('["grove_rgblcd_print", 0, 1, "your name is"]');
+    　　　} else if (Result.includes("名字")) {
+            cpf.request('["grove_rgblcd_clear"]');
+            cpf.request('["grove_rgblcd_print", 0, 0, "your name is"]');
             document.getElementById("words").innerHTML = "your name is";
          }
     }
