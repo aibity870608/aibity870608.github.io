@@ -22,7 +22,7 @@
     setup();
     cpf.request('["grove_setColorRGB", 0, 0, 0, 0]');
     cpf.request('["grove_rgblcd_set_rgb", 0, 0, 0]');
-    cpf.request('["analogWrite", 3, 0]');
+    cpf.request('["analogWrite", 6, 0]');
     cpf.request('["grove_rgblcd_print", 0, 1, "Hello World"]');
 
 
@@ -77,7 +77,11 @@
             cpf.request('["grove_rgblcd_print", 0, 0, "red"]');
             document.getElementById("words").innerHTML = "red " + Result;
             for(i=0; i<255; i+=10){
-                cpf.request('["analogWrite", 3, ' + i +']');
+                cpf.request('["analogWrite", 6, ' + i +']');
+                document.getElementById("light").innerHTML = i;
+            }
+            for(i=255; i>0; i-=10){
+                cpf.request('["analogWrite", 6, ' + i +']');
                 document.getElementById("light").innerHTML = i;
             }
             cpf.SetSpeech("On", "cmn-Hant-TW", Result, 0.5, 2);
@@ -92,7 +96,7 @@
     
     function setup(){
         if(cpf)
-            cpf.setPinMode('["resetPin"],["grove_rgblcd_begin", 16, 2], ["setPinMode", "digital", 3, "PWM"], ["grove_newChainableLED",7, 8, 1]');
+            cpf.setPinMode('["resetPin"],["grove_rgblcd_begin", 16, 2], ["setPinMode", "digital", 6, "PWM"], ["grove_newChainableLED",7, 8, 1]');
     }
 </script>
 </body>
