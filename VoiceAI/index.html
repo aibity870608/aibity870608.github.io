@@ -23,7 +23,7 @@
 
     setup();
     cpf.request('["grove_setColorRGB", 0, 0, 0, 0]');
-    cpf.request(["analogWrite", 3, 0]);
+    // cpf.request(["analogWrite", 3, 0]);
 
     //設定LCD背光顏色
     cpf.request('["grove_rgblcd_set_rgb", 0, 0, 255]');
@@ -118,7 +118,7 @@
                 cpf.request('["grove_setColorRGB", 0, 0, 0, i]');
                 document.getElementById("light").innerHTML = i;
             }
-            cpf.request(["analogWrite", 3, 120]);
+            // cpf.request(["analogWrite", 3, 120]);
             cpf.SetSpeech("On", "cmn-Hant-TW", Result, 2, 2);
 
          } else {
@@ -130,7 +130,7 @@
     
     function setup(){
         if(cpf)
-            cpf.setPinMode('["resetPin"],["grove_rgblcd_begin", 16, 2], ["setPinMode", "digital", 3, "PWM"], ["grove_newChainableLED",7, 8, 1]');
+            cpf.setPinMode('["resetPin"],["grove_rgblcd_begin", 16, 2], ["grove_newChainableLED",7, 8, 1]');//, ["setPinMode", "digital", 3, "PWM"]
     }
 </script>
 </body>
