@@ -55,12 +55,12 @@
             cpf.request('["grove_rgblcd_print", 0, 0, "light on"]');
             document.getElementById("words").innerHTML = Result;
             for(i=0; i<255; i+=10){
-                cpf.request('["grove_setColorRGB", 0, 0, 0, '+ i +']');
                 document.getElementById("light").innerHTML = i;
+                cpf.request('["grove_setColorRGB", 0, 0, 0, '+ i +']');      
             }
             for(i=255; i>0; i-=10){
-                cpf.request('["grove_setColorRGB", 0, 0, 0, '+ i +']');
                 document.getElementById("light").innerHTML = i;
+                cpf.request('["grove_setColorRGB", 0, 0, 0, '+ i +']');
             }
             cpf.SetSpeech("Off", "cmn-Hant-TW", Result, 1, 2);
             setTimeout(loop, 1000);
@@ -71,12 +71,12 @@
             cpf.request('["grove_rgblcd_print", 0, 0, "red"]');
             document.getElementById("words").innerHTML = "red " + Result;
             for(i=0; i<255; i+=10){
-                cpf.request('["analogWrite", 6, ' + i +']');
                 document.getElementById("light").innerHTML = i;
+                cpf.request('["analogWrite", 6, ' + i +']');
             }
             for(i=255; i>0; i-=10){
-                cpf.request('["analogWrite", 6, ' + i +']');
                 document.getElementById("light").innerHTML = i;
+                cpf.request('["analogWrite", 6, ' + i +']');
             }
             cpf.SetSpeech("On", "cmn-Hant-TW", "風扇來囉", 0.5, 2);
 
@@ -85,8 +85,8 @@
             cpf.request('["grove_rgblcd_clear"]');
             cpf.request('["grove_rgblcd_print", 0, 0, "red"]');
             document.getElementById("words").innerHTML = "red " + Result;
-            cpf.request('["analogWrite", 6, 0]');
             cpf.SetSpeech("On", "cmn-Hant-TW", "已幫您關電扇了", 1.5, 1);
+            cpf.request('["analogWrite", 6, 0]');
 
          } else {
             cpf.request('["grove_rgblcd_set_rgb", 0, 0, 0]');
