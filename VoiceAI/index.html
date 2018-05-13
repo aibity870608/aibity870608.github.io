@@ -29,17 +29,17 @@
     clickbtn.addEventListener('click', function(event) {
         cpf.initSpeechRecognition("cmn-Hant-TW");
     　　　// Start speech recognition function with English language
-        GetRecognitionListenStatus(true);
+        //GetRecognitionListenStatus(true);
     });
 
-    function GetRecognitionListenStatus(Status){
-    　　　console.log('Listen status = ' + Status);
-    　　　if (Status == "true"){
-    　　　　　//do somethining
-    　　　}else{
-    　　　　　//do somethining
-    　　　}
-    }
+    // function GetRecognitionListenStatus(Status){
+    // 　　　console.log('Listen status = ' + Status);
+    // 　　　if (Status == "true"){
+    // 　　　　　//do somethining
+    // 　　　}else{
+    // 　　　　　//do somethining
+    // 　　　}
+    // }
 
     function GetRecognizeResult(Result,Type){
     　　　if (Result.includes("綠色")) {
