@@ -8,52 +8,24 @@
 </head>
 <body>
     <h1>Voice AI</h1>
-    <button id="clickbtn">click</button>
+    <button id="clickbtn">中文</button>
     <br/>
     <p id="words">none</p>
 
-    <button id="clickbtncn">clickcn</button>
     <p id="light">light</p>
     <br/>
     
 <script>
     var i;
     var clickbtn = document.getElementById("clickbtn");
-    var clickbtncn = document.getElementById("clickbtncn");
 
     setup();
     cpf.request('["grove_setColorRGB", 0, 0, 0, 0]');
-    // cpf.request(["analogWrite", 3, 0]);
+    cpf.request('["grove_rgblcd_set_rgb", 0, 0, 0]');
+    cpf.request('["grove_rgblcd_print", 0, 1, "Hello World"]');
 
-    //設定LCD背光顏色
-    cpf.request('["grove_rgblcd_set_rgb", 0, 0, 255]');
-    //設定文字
-    //["grove_rgblcd_print", < column : 0~16 >, < row : 0 or 1 >, < text >] 
-    //cpf.request('["grove_rgblcd_print", 0, 1, "Hello World"]');
-    //清空文字
-    //cpf.request('["grove_rgblcd_clear"]');
-    //不顯示文字（不會清空文字）
-    //cpf.request('["grove_rgblcd_display", 0]');
-    //顯示文字
-    //cpf.request('["grove_rgblcd_display", 1]');
-
-    //cpf.SetSpeech(Enable, Language, Content, Pitch, SpeechRate);
-    //cpf.SetSpeech("On", "en-US", "Hello", 0.1, 0.1);
-    // If this SetSpeech function had been set to "On", when SpeechRecognition function is called, device will repeat the voice.
-
-    //cpf.SetSpeech("Off", "", "", "", "");
-    // When set the parameter to "Off", it will disable the repeat behavior.
-
-    //cpf.SetSpeech("Off", "en-US", "Good", 0.1, 0.1);
-    // It will read aloud the word "Good" once.
 
     clickbtn.addEventListener('click', function(event) {
-        cpf.initSpeechRecognition("en-US");
-    　　　// Start speech recognition function with English language
-        GetRecognitionListenStatus(true);
-    });
-
-    clickbtncn.addEventListener('click', function(event) {
         cpf.initSpeechRecognition("cmn-Hant-TW");
     　　　// Start speech recognition function with English language
         GetRecognitionListenStatus(true);
@@ -69,62 +41,40 @@
     }
 
     function GetRecognizeResult(Result,Type){
-    　　　console.log('Result = ' + Result);
-    　　　if(Result.includes("hello")) {
-            cpf.request('["grove_rgblcd_set_rgb", 0, 0, 255]');
+    　　　if (Result.includes("綠色")) {
+            cpf.request('["grove_rgblcd_set_rgb", 0, 255, 0]'); //green
             cpf.request('["grove_rgblcd_clear"]');
-            cpf.request('["grove_rgblcd_print", 0, 0, "Hello" ]');
-            document.getElementById("words").innerHTML = "Hello " + Result;
-            cpf.SetSpeech("On", "en-US", Result, 0.1, 0.1);
-
-    　　　} else if (Result.includes("name")) {
-            cpf.request('["grove_rgblcd_set_rgb", 0, 0, 255]');
-            cpf.request('["grove_rgblcd_clear"]');
-            cpf.request('["grove_rgblcd_print", 0, 0, "your name is"' + Result + ']');
-            document.getElementById("words").innerHTML = "your name is " + Result;
-            cpf.SetSpeech("On", "en-US", Result, 1, 0.1);
-            
-         } else if (Result.includes("你好")) {
-            cpf.request('["grove_rgblcd_set_rgb", 0, 255, 0]');
-            cpf.request('["grove_rgblcd_clear"]');
-            cpf.request('["grove_rgblcd_print", 0, 0, "how are you"]');
-            document.getElementById("words").innerHTML = "how are you " + Result;
-            cpf.SetSpeech("On", "cmn-Hant-TW", "早安" + Result, 1, 1);
+            cpf.request('["grove_rgblcd_print", 0, 0, "the light is green as you see"]');//how are you
+            document.getElementById("words").innerHTML = "the light is green as you see " + Result +" test";
+            cpf.SetSpeech("Off", "cmn-Hant-TW", "綠色早安" + Result, 1, 1);
 
          } else if (Result.includes("測試")) {
-            cpf.request('["grove_rgblcd_set_rgb", 0, 255, 0]');
+            cpf.request('["grove_rgblcd_set_rgb", 255, 0, 0]'); //red
             cpf.request('["grove_rgblcd_clear"]');
-            cpf.request('["grove_rgblcd_print", 0, 0, "test"]');
-            document.getElementById("words").innerHTML = "test " + Result;
+            cpf.request('["grove_rgblcd_print", 0, 0, "red"]');
+            document.getElementById("words").innerHTML = "red " + Result;
             cpf.SetSpeech("On", "cmn-Hant-TW", Result, 2, 1);
 
-         } else if (Result.includes("测试")) {
-            cpf.request('["grove_rgblcd_set_rgb", 0, 255, 0]');
-            cpf.request('["grove_rgblcd_clear"]');
-            cpf.request('["grove_rgblcd_print", 0, 0, "test123"]');
-            document.getElementById("words").innerHTML = "test123 " + Result;
-            cpf.SetSpeech("On", "cmn-Hant-TW", Result, 2, 2);
-
          } else if (Result.includes("開燈")) {
-            cpf.request('["grove_rgblcd_set_rgb", 0, 255, 0]');
+            cpf.request('["grove_rgblcd_set_rgb", 0, 0, 255]'); //blue
             cpf.request('["grove_rgblcd_clear"]');
             cpf.request('["grove_rgblcd_print", 0, 0, "light on"]');
             document.getElementById("words").innerHTML = "請幫我 " + Result;
             for(i=0; i<255; i+=10){
-                cpf.request('["grove_setColorRGB", 0, 0, 0, i]');
+                cpf.request('["grove_setColorRGB", 0, 0, 0, '+ i +']');
                 document.getElementById("light").innerHTML = i;
             }
             for(i=255; i>0; i-=10){
-                cpf.request('["grove_setColorRGB", 0, 0, 0, i]');
+                cpf.request('["grove_setColorRGB", 0, 0, 0, '+ i +']');
                 document.getElementById("light").innerHTML = i;
             }
-            // cpf.request(["analogWrite", 3, 120]);
-            cpf.SetSpeech("On", "cmn-Hant-TW", Result, 2, 2);
+            cpf.SetSpeech("Off", "cmn-Hant-TW", Result, 2, 2);
 
          } else {
-            cpf.request('["grove_rgblcd_set_rgb", 255, 0, 0]');
+            cpf.request('["grove_rgblcd_set_rgb", 0, 0, 0]');
             cpf.request('["grove_rgblcd_clear"]');
-            document.getElementById("words").innerHTML = "nothing " + Result;
+            cpf.request('["grove_rgblcd_print", 0, 0, "ready"]');
+            document.getElementById("words").innerHTML = "ready " + Result;
          }
     }
     
