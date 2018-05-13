@@ -63,6 +63,7 @@
                 document.getElementById("light").innerHTML = i;
             }
             cpf.SetSpeech("Off", "cmn-Hant-TW", Result, 1, 2);
+            setTimeout(loop, 1000);
 
          } else if (Result.includes("好熱")) {
             cpf.request('["grove_rgblcd_set_rgb", 255, 0, 0]'); //red
