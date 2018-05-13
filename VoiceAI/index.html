@@ -22,6 +22,7 @@
     setup();
     cpf.request('["grove_setColorRGB", 0, 0, 0, 0]');
     cpf.request('["grove_rgblcd_set_rgb", 0, 0, 0]');
+    cpf.request('["analogWrite", 3, 0]');
     cpf.request('["grove_rgblcd_print", 0, 1, "Hello World"]');
 
 
@@ -59,7 +60,7 @@
             cpf.request('["grove_rgblcd_set_rgb", 0, 0, 255]'); //blue
             cpf.request('["grove_rgblcd_clear"]');
             cpf.request('["grove_rgblcd_print", 0, 0, "light on"]');
-            document.getElementById("words").innerHTML = "請幫我 " + Result;
+            document.getElementById("words").innerHTML = Result;
             for(i=0; i<255; i+=10){
                 cpf.request('["grove_setColorRGB", 0, 0, 0, '+ i +']');
                 document.getElementById("light").innerHTML = i;
@@ -68,7 +69,18 @@
                 cpf.request('["grove_setColorRGB", 0, 0, 0, '+ i +']');
                 document.getElementById("light").innerHTML = i;
             }
-            cpf.SetSpeech("Off", "cmn-Hant-TW", Result, 2, 2);
+            cpf.SetSpeech("Off", "cmn-Hant-TW", Result, 1, 2);
+
+         } else if (Result.includes("好熱")) {
+            cpf.request('["grove_rgblcd_set_rgb", 255, 0, 0]'); //red
+            cpf.request('["grove_rgblcd_clear"]');
+            cpf.request('["grove_rgblcd_print", 0, 0, "red"]');
+            document.getElementById("words").innerHTML = "red " + Result;
+            for(i=0; i<255; i+=10){
+                cpf.request('["analogWrite", 3, ' + i +']');
+                document.getElementById("light").innerHTML = i;
+            }
+            cpf.SetSpeech("On", "cmn-Hant-TW", Result, 0.5, 2);
 
          } else {
             cpf.request('["grove_rgblcd_set_rgb", 0, 0, 0]');
@@ -80,7 +92,7 @@
     
     function setup(){
         if(cpf)
-            cpf.setPinMode('["resetPin"],["grove_rgblcd_begin", 16, 2], ["grove_newChainableLED",7, 8, 1]');//, ["setPinMode", "digital", 3, "PWM"]
+            cpf.setPinMode('["resetPin"],["grove_rgblcd_begin", 16, 2], ["setPinMode", "digital", 3, "PWM"], ["grove_newChainableLED",7, 8, 1]');
     }
 </script>
 </body>
