@@ -47,16 +47,9 @@
             cpf.request('["grove_rgblcd_clear"]');
             cpf.request('["grove_rgblcd_print", 0, 0, "the light is green as you see"]');//how are you
             document.getElementById("words").innerHTML = "the light is green as you see " + Result +" test";
-            cpf.SetSpeech("Off", "cmn-Hant-TW", "綠色早安" + Result, 1, 1);
+            cpf.SetSpeech("Off", "cmn-Hant-TW", "綠色早安", 1, 1);
 
-         } else if (Result.includes("測試")) {
-            cpf.request('["grove_rgblcd_set_rgb", 255, 0, 0]'); //red
-            cpf.request('["grove_rgblcd_clear"]');
-            cpf.request('["grove_rgblcd_print", 0, 0, "red"]');
-            document.getElementById("words").innerHTML = "red " + Result;
-            cpf.SetSpeech("On", "cmn-Hant-TW", Result, 2, 1);
-
-         } else if (Result.includes("開燈")) {
+         } else if (Result.includes("呼吸燈")) {
             cpf.request('["grove_rgblcd_set_rgb", 0, 0, 255]'); //blue
             cpf.request('["grove_rgblcd_clear"]');
             cpf.request('["grove_rgblcd_print", 0, 0, "light on"]');
@@ -84,7 +77,15 @@
                 cpf.request('["analogWrite", 6, ' + i +']');
                 document.getElementById("light").innerHTML = i;
             }
-            cpf.SetSpeech("On", "cmn-Hant-TW", Result, 0.5, 2);
+            cpf.SetSpeech("On", "cmn-Hant-TW", "風扇來囉", 0.5, 2);
+
+         } else if (Result.includes("好冷")) {
+            cpf.request('["grove_rgblcd_set_rgb", 255, 0, 0]'); //red
+            cpf.request('["grove_rgblcd_clear"]');
+            cpf.request('["grove_rgblcd_print", 0, 0, "red"]');
+            document.getElementById("words").innerHTML = "red " + Result;
+            cpf.request('["analogWrite", 6, 0]');
+            cpf.SetSpeech("On", "cmn-Hant-TW", "已幫您關電扇了", 1.5, 1);
 
          } else {
             cpf.request('["grove_rgblcd_set_rgb", 0, 0, 0]');
