@@ -62,7 +62,7 @@
                 document.getElementById("light").innerHTML = i;
                 cpf.request('["grove_setColorRGB", 0, 0, 0, '+ i +']');
             }
-            cpf.SetSpeech("Off", "cmn-Hant-TW", Result, 1, 2);
+            //cpf.SetSpeech("Off", "cmn-Hant-TW", Result, 1, 2);
             setTimeout(loop, 1000);
 
          } else if (Result.includes("好熱")) {
