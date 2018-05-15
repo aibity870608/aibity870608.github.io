@@ -47,7 +47,7 @@
             cpf.request('["grove_rgblcd_clear"]');
             cpf.request('["grove_rgblcd_print", 0, 0, "the light is green as you see"]');//how are you
             document.getElementById("words").innerHTML = "the light is green as you see " + Result +" test";
-            //cpf.SetSpeech("Off", "cmn-Hant-TW", "綠色早安", 1, 1);
+            cpf.SetSpeech("Off", "cmn-Hant-TW", "早安", 1, 1);
 
          } else if (Result.includes("呼吸燈")) {
             cpf.request('["grove_rgblcd_set_rgb", 0, 0, 255]'); //blue
@@ -62,7 +62,7 @@
                 document.getElementById("light").innerHTML = i;
                 cpf.request('["grove_setColorRGB", 0, 0, 0, '+ i +']');
             }
-            //cpf.SetSpeech("Off", "cmn-Hant-TW", Result, 1, 2);
+            cpf.SetSpeech("Off", "cmn-Hant-TW", Result, 1, 2);
             setTimeout(loop, 1000);
 
          } else if (Result.includes("好熱")) {
