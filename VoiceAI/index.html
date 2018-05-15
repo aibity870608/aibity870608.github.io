@@ -123,10 +123,10 @@
         setTimeout(function () {
             document.getElementById("light").innerHTML = i;
             cpf.request('["grove_setColorRGB", 0, 0, 0, ' + i + ']');
-            i+=10;
+            i+=5;
             if (i < 255) {
                 ForLoop();
-            } else ForLoop2();
+            } else if(i == 255) ForLoop2();
         }, 200)
     }
 
@@ -180,11 +180,15 @@
 
         } else if (Result.includes("日期")) {
             var Today = new Date();
+
             document.getElementById("words").innerHTML =
                 "今天日期是 " + Today.getFullYear() + " 年 "
                 + (Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日";
+                
             cpf.SetSpeech("On", "cmn-Hant-TW", "今天日期是 " + Today.getFullYear() + " 年 "
                 + (Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日", 1, 1);
+
+
             cpf.request('["grove_rgblcd_set_rgb", 255, 0, 0]');
             cpf.request('["grove_setColorRGB", 0, 0, 0, 255]');
 
