@@ -47,7 +47,7 @@
          //  your code here
                     document.getElementById("light").innerHTML = i;
                     cpf.request('["grove_setColorRGB", 0, 0, 0, ' + i + ']');
-                    i++;                     //  increment the counter
+                    i+=10;                     //  increment the counter
                     if (i < 255) {            //  if the counter < 10, call the loop function
                         myLoop();             //  ..  again which will trigger another 
                     }                        //  ..  setTimeout()
@@ -75,11 +75,11 @@
                 //     cpf.request('["grove_setColorRGB", 0, 0, 0, ' + i + ']');
 
                 // }
-                for (i = 255; i > 0; i -= 10) {
-                    alert(i);
-                    document.getElementById("light").innerHTML = i;
-                    cpf.request('["grove_setColorRGB", 0, 0, 0, ' + i + ']');
-                }
+                // for (i = 255; i > 0; i -= 10) {
+                //     alert(i);
+                //     document.getElementById("light").innerHTML = i;
+                //     cpf.request('["grove_setColorRGB", 0, 0, 0, ' + i + ']');
+                // }
                 cpf.SetSpeech("Off", "cmn-Hant-TW", Result, 1, 2);
 
 
