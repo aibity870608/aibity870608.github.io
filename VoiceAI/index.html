@@ -55,7 +55,7 @@
             cpf.request('["grove_rgblcd_print", 0, 0, "light on"]');
             document.getElementById("words").innerHTML = Result;
             for(i=0; i<255; i+=10){
-                alert(i);
+                alert(i+"qqq");
                 document.getElementById("light").innerHTML = i;
                 cpf.request('["grove_setColorRGB", 0, 0, 0, '+ i +']');      
             }
