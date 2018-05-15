@@ -10,7 +10,7 @@
 
 <body>
     <h1>Voice AI</h1>
-    <button id="clickbtn">中文</button>
+    <button id="clickbtn">呼叫AI</button>
     <br/>
     <p id="words">none</p>
 
@@ -24,6 +24,7 @@
 
     <script>
         var i;
+        var category,city;
         var clickbtn = document.getElementById("clickbtn");
 
         setup();
@@ -35,8 +36,6 @@
 
         clickbtn.addEventListener('click', function (event) {
             cpf.initSpeechRecognition("cmn-Hant-TW");
-            // Start speech recognition function with English language
-            //GetRecognitionListenStatus(true);
         });
 
         // function GetRecognitionListenStatus(Status){
@@ -48,14 +47,26 @@
         // 　　　}
         // }
 
-        function myLoop() {
+        function ForLoop() {
             setTimeout(function () {
                     document.getElementById("light").innerHTML = i;
                     cpf.request('["grove_setColorRGB", 0, 0, 0, ' + i + ']');
                     i+=10;
                     if (i < 255) {
-                        myLoop();
-                    }
+                        ForLoop();
+                    } else ForLoop2();
+                }, 1000)
+        }
+
+        function ForLoop2() {
+            setTimeout(function () {
+                    i=255;
+                    document.getElementById("light").innerHTML = i;
+                    cpf.request('["grove_setColorRGB", 0, 0, 0, ' + i + ']');
+                    i-=10;
+                    if (i > 0) {
+                        ForLoop2();
+                    } else ForLoop();
                 }, 1000)
         }
 
@@ -63,8 +74,8 @@
             if (Result.includes("綠色")) {
                 cpf.request('["grove_rgblcd_set_rgb", 0, 255, 0]'); //green
                 cpf.request('["grove_rgblcd_clear"]');
-                cpf.request('["grove_rgblcd_print", 0, 0, "the light is green as you see"]');//how are you
-                document.getElementById("words").innerHTML = "the light is green as you see " + Result + " test";
+                cpf.request('["grove_rgblcd_print", 0, 0, "the light is green"]');//how are you
+                document.getElementById("words").innerHTML = "the light is green";
                 cpf.SetSpeech("Off", "cmn-Hant-TW", "早安", 1, 1);
 
             } else if (Result.includes("呼吸燈")) {
@@ -73,18 +84,7 @@
                 cpf.request('["grove_rgblcd_print", 0, 0, "light on"]');
                 document.getElementById("words").innerHTML = Result;
                 i = 0;
-                myLoop();
-                // for (i = 0; i < 255; i += 10) {
-                //     alert(i + "qqq");
-                //     document.getElementById("light").innerHTML = i;
-                //     cpf.request('["grove_setColorRGB", 0, 0, 0, ' + i + ']');
-
-                // }
-                // for (i = 255; i > 0; i -= 10) {
-                //     alert(i);
-                //     document.getElementById("light").innerHTML = i;
-                //     cpf.request('["grove_setColorRGB", 0, 0, 0, ' + i + ']');
-                // }
+                ForLoop();
                 cpf.SetSpeech("Off", "cmn-Hant-TW", Result, 1, 2);
 
 
@@ -95,14 +95,8 @@
                 document.getElementById("words").innerHTML = "red " + Result;
                 cpf.SetSpeech("On", "cmn-Hant-TW", "風扇來囉", 0.5, 2);
                 for (i = 0; i < 255; i += 10) {
-                    document.getElementById("light").innerHTML = i;
                     cpf.request('["analogWrite", 6, ' + i + ']');
                 }
-                for (i = 255; i > 0; i -= 10) {
-                    document.getElementById("light").innerHTML = i;
-                    cpf.request('["analogWrite", 6, ' + i + ']');
-                }
-
 
             } else if (Result.includes("好冷")) {
                 cpf.request('["grove_rgblcd_set_rgb", 255, 0, 0]'); //red
@@ -130,11 +124,9 @@
                 cpf.request('["grove_rgblcd_set_rgb", 255, 0, 0]');
                 cpf.request('["grove_setColorRGB", 0, 0, 0, 255]');
 
-            } else if (Result.includes("天氣")) {
-                cpf.SetSpeech("Off", "cmn-Hant-TW", "您現在在甚麼城市呢？", 1, 2);
-                if (Result.includes("天氣")) {
-
-                }
+            } else if (Result.includes("空氣")) {
+                cpf.SetSpeech("Off", "cmn-Hant-TW", city + "的空氣品質為" + category, 1, 2);
+                
             } else {
                 cpf.request('["grove_rgblcd_set_rgb", 0, 0, 0]');
                 cpf.request('["grove_rgblcd_clear"]');
@@ -155,9 +147,9 @@
 		var $content = $('#content');
 		var county = [];
 		var result;
-		$.get('http://opendata.epa.gov.tw/ws/Data/ATM00698/?$format=json',function(data){
+		$.get('http://opendata2.epa.gov.tw/AQX.json',function(data){
 			data.forEach(function(e,i){
-				county[i] = e.SiteName;
+				county[i] = e.County;
 			});
 			result=county.filter(function(element, index, arr){
 				return arr.indexOf(element)=== index;
@@ -179,13 +171,12 @@
 			});
 			
 
-			var category;
 			var color;
 			$button.on('click',function(){
-				var aa = $area.val();
+				city = $area.val();
 				$content.html('');
 				data.forEach(function(e,i){
-					if(e.SiteName == aa){
+					if(e.SiteName == city){
 						if(e['PM2.5']<=15){
 							category = "良好";
 							color="0,232,0";
@@ -208,10 +199,9 @@
 							category = "危害";
 							color="126,0,35";
 						}
-						$content.append('<tr><td>'+aa+'</td>'+
+						$content.append('<tr><td>'+city+'</td>'+
 										'<td><i class="fa fa-circle" style="color:rgb('+color+');"></i>　'+e['PM2.5']+'</td>'+
 										'<td>'+category+'</td></tr>');
-						changeColor(color);
 					}
 				});
 			});
