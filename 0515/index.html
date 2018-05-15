@@ -107,6 +107,7 @@
 <script>
 	setup();
     var clickbtn = document.getElementById("clickbtn");
+	var category, mycity;
 
 	window.onload = function(){
 		var $city = $('#city');
@@ -127,19 +128,17 @@
 				$city.append('<option value="'+e+'">'+e+'</option>');
 			});
 			//找出這個縣市裡的地區並秀出來
-			var cc = $city.val();
 			$( "#city" ).change(function () {
-				cc = $city.val();
+				mycity = $city.val();
 				$area.html('');
 				data.forEach(function(e,i){
-					if(e.County == cc){
+					if(e.County == mycity){
 						$area.append('<option value="'+e.SiteName+'">'+e.SiteName+'</option>');
 					}
 				});
 			});
 			
 
-			var category;
 			var color;
 			$( "#area" ).change(function () {
 				var aa = $area.val();
@@ -204,7 +203,7 @@
             cpf.request('["grove_setColorRGB", 0, 0, 0, 255]');
 
         } else if (Result.includes("空氣")) {
-            cpf.SetSpeech("Off", "cmn-Hant-TW", city + "的空氣品質為" + category, 1, 2);
+            cpf.SetSpeech("Off", "cmn-Hant-TW", mycity + "的空氣品質為" + category, 1, 2);
 
         } else {
             cpf.request('["grove_rgblcd_set_rgb", 0, 0, 0]');
