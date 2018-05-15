@@ -58,25 +58,25 @@
 
     function ForLoop() {
         setTimeout(function () {
-                document.getElementById("light").innerHTML = i;
-                cpf.request('["grove_setColorRGB", 0, 0, 0, ' + i + ']');
-                i+=10;
-                if (i < 255) {
-                    ForLoop();
-                } else ForLoop2();
-            }, 1000)
+            document.getElementById("light").innerHTML = i;
+            cpf.request('["grove_setColorRGB", 0, 0, 0, ' + i + ']');
+            i+=10;
+            if (i < 255) {
+                ForLoop();
+            } else ForLoop2();
+        }, 200)
     }
 
     function ForLoop2() {
         setTimeout(function () {
-                i=255;
-                document.getElementById("light").innerHTML = i;
-                cpf.request('["grove_setColorRGB", 0, 0, 0, ' + i + ']');
-                i-=10;
-                if (i > 0) {
-                    ForLoop2();
-                } else ForLoop();
-            }, 1000)
+            i=255;
+            document.getElementById("light").innerHTML = i;
+            cpf.request('["grove_setColorRGB", 0, 0, 0, ' + i + ']');
+            i-=10;
+            if (i > 0) {
+                ForLoop2();
+            } else ForLoop();
+        }, 200)
     }
 
     function GetRecognizeResult(Result, Type) {
