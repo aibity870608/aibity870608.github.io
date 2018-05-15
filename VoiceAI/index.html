@@ -16,11 +16,20 @@
 
     <p id="light">light</p>
     <br/>
-    <div class="form-group">
-        <select id="city" class="form-control">
-            <option value="choose">請選擇</option>
-        </select>
-  </div>
+    <div class="col-xs-4">
+        <div class="form-group">
+              <select id="city" class="form-control">
+                  <option value="choose">請選擇</option>
+              </select>
+        </div>
+    </div>
+    <div class="col-xs-4">
+        <div class="form-group">
+              <select id="area" class="form-control">
+                  <option value="choose">請選擇</option>
+              </select>
+        </div>
+    </div>
 
     <script>
         var i;
@@ -126,7 +135,7 @@
 
             } else if (Result.includes("空氣")) {
                 cpf.SetSpeech("Off", "cmn-Hant-TW", city + "的空氣品質為" + category, 1, 2);
-                
+
             } else {
                 cpf.request('["grove_rgblcd_set_rgb", 0, 0, 0]');
                 cpf.request('["grove_rgblcd_clear"]');
@@ -172,7 +181,7 @@
 			
 
 			var color;
-			$button.on('click',function(){
+			$( "#area" ).change(function () {
 				city = $area.val();
 				$content.html('');
 				data.forEach(function(e,i){
