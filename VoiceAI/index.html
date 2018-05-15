@@ -33,7 +33,7 @@
 
 <script>
     var i;
-    var category,city;
+    var category,mycity;
     var clickbtn = document.getElementById("clickbtn");
 
     window.onload = function(){
@@ -67,10 +67,10 @@
 
             var color;
             $( "#area" ).change(function () {
-                city = $area.val();
+                mycity = $area.val();
                 $content.html('');
                 data.forEach(function(e,i){
-                    if(e.SiteName == city){
+                    if(e.SiteName == mycity){
                         if(e['PM2.5']<=15){
                             category = "良好";
                             color="0,232,0";
@@ -184,7 +184,7 @@
             document.getElementById("words").innerHTML =
                 "今天日期是 " + Today.getFullYear() + " 年 "
                 + (Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日";
-                
+
             cpf.SetSpeech("On", "cmn-Hant-TW", "今天日期是 " + Today.getFullYear() + " 年 "
                 + (Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日", 1, 1);
 
