@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>VoiceAI</title>
 </head>
+
 <body>
     <h1>Voice AI</h1>
     <button id="clickbtn">中文</button>
@@ -14,113 +16,130 @@
 
     <p id="light">light</p>
     <br/>
-    
-<script>
-    var i;
-    var clickbtn = document.getElementById("clickbtn");
 
-    setup();
-    cpf.request('["grove_setColorRGB", 0, 0, 0, 0]');
-    cpf.request('["grove_rgblcd_set_rgb", 0, 0, 0]');
-    cpf.request('["analogWrite", 6, 0]');
-    cpf.request('["grove_rgblcd_print", 0, 1, "Hello World"]');
+    <script>
+        var i;
+        var clickbtn = document.getElementById("clickbtn");
+
+        setup();
+        cpf.request('["grove_setColorRGB", 0, 0, 0, 0]');
+        cpf.request('["grove_rgblcd_set_rgb", 0, 0, 0]');
+        cpf.request('["analogWrite", 6, 0]');
+        cpf.request('["grove_rgblcd_print", 0, 1, "Hello World"]');
 
 
-    clickbtn.addEventListener('click', function(event) {
-        cpf.initSpeechRecognition("cmn-Hant-TW");
-    　　　// Start speech recognition function with English language
-        //GetRecognitionListenStatus(true);
-    });
+        clickbtn.addEventListener('click', function (event) {
+            cpf.initSpeechRecognition("cmn-Hant-TW");
+            // Start speech recognition function with English language
+            //GetRecognitionListenStatus(true);
+        });
 
-    // function GetRecognitionListenStatus(Status){
-    // 　　　console.log('Listen status = ' + Status);
-    // 　　　if (Status == "true"){
-    // 　　　　　//do somethining
-    // 　　　}else{
-    // 　　　　　//do somethining
-    // 　　　}
-    // }
+        // function GetRecognitionListenStatus(Status){
+        // 　　　console.log('Listen status = ' + Status);
+        // 　　　if (Status == "true"){
+        // 　　　　　//do somethining
+        // 　　　}else{
+        // 　　　　　//do somethining
+        // 　　　}
+        // }
+        function myLoop() {
+            setTimeout(function () {    //  call a 3s setTimeout when the loop is called
+                    alert(i + "qqq");          //  your code here
+                    document.getElementById("light").innerHTML = i;
+                    cpf.request('["grove_setColorRGB", 0, 0, 0, ' + i + ']');
+                    i++;                     //  increment the counter
+                    if (i < 255) {            //  if the counter < 10, call the loop function
+                        myLoop();             //  ..  again which will trigger another 
+                    }                        //  ..  setTimeout()
+                }, 1000)
+        }
 
-    function GetRecognizeResult(Result,Type){
-    　　　if (Result.includes("綠色")) {
-            cpf.request('["grove_rgblcd_set_rgb", 0, 255, 0]'); //green
-            cpf.request('["grove_rgblcd_clear"]');
-            cpf.request('["grove_rgblcd_print", 0, 0, "the light is green as you see"]');//how are you
-            document.getElementById("words").innerHTML = "the light is green as you see " + Result +" test";
-            cpf.SetSpeech("Off", "cmn-Hant-TW", "早安", 1, 1);
+        function GetRecognizeResult(Result, Type) {
+            if (Result.includes("綠色")) {
+                cpf.request('["grove_rgblcd_set_rgb", 0, 255, 0]'); //green
+                cpf.request('["grove_rgblcd_clear"]');
+                cpf.request('["grove_rgblcd_print", 0, 0, "the light is green as you see"]');//how are you
+                document.getElementById("words").innerHTML = "the light is green as you see " + Result + " test";
+                cpf.SetSpeech("Off", "cmn-Hant-TW", "早安", 1, 1);
 
-         } else if (Result.includes("呼吸燈")) {
-            cpf.request('["grove_rgblcd_set_rgb", 0, 0, 255]'); //blue
-            cpf.request('["grove_rgblcd_clear"]');
-            cpf.request('["grove_rgblcd_print", 0, 0, "light on"]');
-            document.getElementById("words").innerHTML = Result;
-            for(i=0; i<255; i+=10){
-                alert(i+"qqq");
-                document.getElementById("light").innerHTML = i;
-                cpf.request('["grove_setColorRGB", 0, 0, 0, '+ i +']');      
+            } else if (Result.includes("呼吸燈")) {
+                cpf.request('["grove_rgblcd_set_rgb", 0, 0, 255]'); //blue
+                cpf.request('["grove_rgblcd_clear"]');
+                cpf.request('["grove_rgblcd_print", 0, 0, "light on"]');
+                document.getElementById("words").innerHTML = Result;
+                i = 0;
+                myLoop();
+                // for (i = 0; i < 255; i += 10) {
+                //     alert(i + "qqq");
+                //     document.getElementById("light").innerHTML = i;
+                //     cpf.request('["grove_setColorRGB", 0, 0, 0, ' + i + ']');
+
+                // }
+                for (i = 255; i > 0; i -= 10) {
+                    alert(i);
+                    document.getElementById("light").innerHTML = i;
+                    cpf.request('["grove_setColorRGB", 0, 0, 0, ' + i + ']');
+                }
+                cpf.SetSpeech("Off", "cmn-Hant-TW", Result, 1, 2);
+
+
+            } else if (Result.includes("好熱")) {
+                cpf.request('["grove_rgblcd_set_rgb", 255, 0, 0]'); //red
+                cpf.request('["grove_rgblcd_clear"]');
+                cpf.request('["grove_rgblcd_print", 0, 0, "red"]');
+                document.getElementById("words").innerHTML = "red " + Result;
+                cpf.SetSpeech("On", "cmn-Hant-TW", "風扇來囉", 0.5, 2);
+                for (i = 0; i < 255; i += 10) {
+                    document.getElementById("light").innerHTML = i;
+                    cpf.request('["analogWrite", 6, ' + i + ']');
+                }
+                for (i = 255; i > 0; i -= 10) {
+                    document.getElementById("light").innerHTML = i;
+                    cpf.request('["analogWrite", 6, ' + i + ']');
+                }
+
+
+            } else if (Result.includes("好冷")) {
+                cpf.request('["grove_rgblcd_set_rgb", 255, 0, 0]'); //red
+                cpf.request('["grove_rgblcd_clear"]');
+                cpf.request('["grove_rgblcd_print", 0, 0, "red"]');
+                document.getElementById("words").innerHTML = "red " + Result;
+                cpf.SetSpeech("On", "cmn-Hant-TW", "已幫您關電扇了", 1, 1);
+                cpf.request('["analogWrite", 6, 0]');
+
+            } else if (Result.includes("日期")) {
+                var Today = new Date();
+                document.getElementById("words").innerHTML =
+                    "今天日期是 " + Today.getFullYear() + " 年 "
+                    + (Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日";
+                cpf.SetSpeech("On", "cmn-Hant-TW", "今天日期是 " + Today.getFullYear() + " 年 "
+                    + (Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日", 1, 1);
+                cpf.request('["grove_rgblcd_set_rgb", 255, 0, 0]');
+                cpf.request('["grove_setColorRGB", 0, 0, 0, 255]');
+
+            } else if (Result.includes("幾點")) {
+                var Today = new Date();
+                document.getElementById("words").innerHTML =
+                    "現在時間是 " + Today.getHours() + ":" + Today.getMinutes();
+                cpf.SetSpeech("On", "cmn-Hant-TW", "現在時間是 " + Today.getHours() + ":" + Today.getMinutes(), 1, 1);
+                cpf.request('["grove_rgblcd_set_rgb", 255, 0, 0]');
+                cpf.request('["grove_setColorRGB", 0, 0, 0, 255]');
+
+            } else if (Result.includes("天氣")) {
+                cpf.SetSpeech("Off", "cmn-Hant-TW", "您現在在甚麼城市呢？", 1, 2);
+            } else {
+                cpf.request('["grove_rgblcd_set_rgb", 0, 0, 0]');
+                cpf.request('["grove_rgblcd_clear"]');
+                cpf.request('["grove_rgblcd_print", 0, 0, "ready"]');
+                document.getElementById("words").innerHTML = "ready " + Result;
             }
-            for(i=255; i>0; i-=10){
-                alert(i);
-                document.getElementById("light").innerHTML = i;
-                cpf.request('["grove_setColorRGB", 0, 0, 0, '+ i +']');
-            }
-            cpf.SetSpeech("Off", "cmn-Hant-TW", Result, 1, 2);
-            setTimeout(loop, 1000);
+        }
 
-         } else if (Result.includes("好熱")) {
-            cpf.request('["grove_rgblcd_set_rgb", 255, 0, 0]'); //red
-            cpf.request('["grove_rgblcd_clear"]');
-            cpf.request('["grove_rgblcd_print", 0, 0, "red"]');
-            document.getElementById("words").innerHTML = "red " + Result;
-            cpf.SetSpeech("On", "cmn-Hant-TW", "風扇來囉", 0.5, 2);
-            for(i=0; i<255; i+=10){
-                document.getElementById("light").innerHTML = i;
-                cpf.request('["analogWrite", 6, ' + i +']');
-            }
-            for(i=255; i>0; i-=10){
-                document.getElementById("light").innerHTML = i;
-                cpf.request('["analogWrite", 6, ' + i +']');
-            }
-            
-
-         } else if (Result.includes("好冷")) {
-            cpf.request('["grove_rgblcd_set_rgb", 255, 0, 0]'); //red
-            cpf.request('["grove_rgblcd_clear"]');
-            cpf.request('["grove_rgblcd_print", 0, 0, "red"]');
-            document.getElementById("words").innerHTML = "red " + Result;
-            cpf.SetSpeech("On", "cmn-Hant-TW", "已幫您關電扇了", 1, 1);
-            cpf.request('["analogWrite", 6, 0]');
-
-         }  else if (Result.includes("日期")) {
-            var Today=new Date();
-            document.getElementById("words").innerHTML =
-                            "今天日期是 " + Today.getFullYear()+ " 年 "
-                            + (Today.getMonth()+1) + " 月 " + Today.getDate() + " 日";
-            cpf.SetSpeech("On", "cmn-Hant-TW", "今天日期是 " + Today.getFullYear()+ " 年 "
-                            + (Today.getMonth()+1) + " 月 " + Today.getDate() + " 日", 1, 1);
-            cpf.request('["grove_rgblcd_set_rgb", 255, 0, 0]');
-            cpf.request('["grove_setColorRGB", 0, 0, 0, 255]');
-
-         } else if (Result.includes("幾點")) {
-            var Today=new Date();
-            document.getElementById("words").innerHTML =
-                            "現在時間是 " + currentdate.getHours() + ":" + currentdate.getMinutes();
-            cpf.SetSpeech("On", "cmn-Hant-TW", "現在時間是 " + currentdate.getHours() + ":" + currentdate.getMinutes(), 1, 1);
-            cpf.request('["grove_rgblcd_set_rgb", 255, 0, 0]');
-            cpf.request('["grove_setColorRGB", 0, 0, 0, 255]');
-
-         } else {
-            cpf.request('["grove_rgblcd_set_rgb", 0, 0, 0]');
-            cpf.request('["grove_rgblcd_clear"]');
-            cpf.request('["grove_rgblcd_print", 0, 0, "ready"]');
-            document.getElementById("words").innerHTML = "ready " + Result;
-         }
-    }
-    
-    function setup(){
-        if(cpf)
-            cpf.setPinMode('["resetPin"],["grove_rgblcd_begin", 16, 2], ["setPinMode", "digital", 6, "PWM"], ["grove_newChainableLED",7, 8, 1]');
-    }
-</script>
+        function setup() {
+            if (cpf)
+                cpf.setPinMode('["resetPin"],["grove_rgblcd_begin", 16, 2], ["setPinMode", "digital", 6, "PWM"], ["grove_newChainableLED",7, 8, 1]');
+        }
+    </script>
 </body>
+
 </html>
