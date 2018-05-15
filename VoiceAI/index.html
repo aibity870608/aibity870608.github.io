@@ -70,6 +70,7 @@
             cpf.request('["grove_rgblcd_clear"]');
             cpf.request('["grove_rgblcd_print", 0, 0, "red"]');
             document.getElementById("words").innerHTML = "red " + Result;
+            cpf.SetSpeech("On", "cmn-Hant-TW", "風扇來囉", 0.5, 2);
             for(i=0; i<255; i+=10){
                 document.getElementById("light").innerHTML = i;
                 cpf.request('["analogWrite", 6, ' + i +']');
@@ -78,7 +79,7 @@
                 document.getElementById("light").innerHTML = i;
                 cpf.request('["analogWrite", 6, ' + i +']');
             }
-            cpf.SetSpeech("On", "cmn-Hant-TW", "風扇來囉", 0.5, 2);
+            
 
          } else if (Result.includes("好冷")) {
             cpf.request('["grove_rgblcd_set_rgb", 255, 0, 0]'); //red
