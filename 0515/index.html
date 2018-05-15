@@ -5,6 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 	<title>JS Bin</title>
+	<link rel="stylesheet" href="font-awesome-4.7.0\css\font-awesome.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -78,9 +79,6 @@
 	      			</select>
 	    		</div>
 	    	</div>
-	    	<div class="col-xs-4">
-	    		<button id="button" type="button" class="btn btn-info">查詢</button>
-	    	</div>
   		</div>
 	</div>
 	<div class="row" id="bottom">
@@ -98,11 +96,13 @@
 			</table>
 		</div>
 	</div>
-	<div class="row" align="center" id="top">
-		<div class="col-xs-12">
-			<p>《引用行政院環境保護署污染物濃度與污染副指標值對照表》</p>
-		</div>
-	</div>
+	<button id="clickbtn">呼叫AI</button>
+    <br/>
+    <p id="words">none</p>
+
+    <p id="light">light</p>
+    <br/>
+
 </body>
 <script>
 	setup();
