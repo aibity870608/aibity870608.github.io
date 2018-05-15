@@ -89,13 +89,21 @@
             cpf.SetSpeech("On", "cmn-Hant-TW", "已幫您關電扇了", 1, 1);
             cpf.request('["analogWrite", 6, 0]');
 
-         } else if (Result.includes("幾點")) {
+         }  else if (Result.includes("日期")) {
             var Today=new Date();
             document.getElementById("words").innerHTML =
                             "今天日期是 " + Today.getFullYear()+ " 年 "
                             + (Today.getMonth()+1) + " 月 " + Today.getDate() + " 日";
             cpf.SetSpeech("On", "cmn-Hant-TW", "今天日期是 " + Today.getFullYear()+ " 年 "
                             + (Today.getMonth()+1) + " 月 " + Today.getDate() + " 日", 1, 1);
+            cpf.request('["grove_rgblcd_set_rgb", 255, 0, 0]');
+            cpf.request('["grove_setColorRGB", 0, 0, 0, 255]');
+
+         } else if (Result.includes("幾點")) {
+            var Today=new Date();
+            document.getElementById("words").innerHTML =
+                            "現在時間是 " + currentdate.getHours() + ":" + currentdate.getMinutes();
+            cpf.SetSpeech("On", "cmn-Hant-TW", "現在時間是 " + currentdate.getHours() + ":" + currentdate.getMinutes(), 1, 1);
             cpf.request('["grove_rgblcd_set_rgb", 255, 0, 0]');
             cpf.request('["grove_setColorRGB", 0, 0, 0, 255]');
 
