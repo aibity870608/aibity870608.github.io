@@ -96,7 +96,7 @@
             cpf.SetSpeech("Off", "cmn-Hant-TW", Result, 1, 2);
 
 
-        } else if (Result.includes("好熱")) {
+        } else if (Result.includes("好熱")|| Result.includes("我知道你熱")) {
             cpf.request('["grove_rgblcd_set_rgb", 255, 0, 0]'); //red
             cpf.request('["grove_rgblcd_clear"]');
             cpf.request('["grove_rgblcd_print", 0, 0, "red"]');
