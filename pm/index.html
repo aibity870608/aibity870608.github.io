@@ -130,44 +130,48 @@
 						$area.append('<option value="'+e.SiteName+'">'+e.SiteName+'</option>');
 					}
 				});
+				getValue();
 			});
 			
-
 			var color;
 			$( "#area" ).change(function () {
-				myarea = $area.val();
-				$content.html('');
-				data.forEach(function(e,i){
-					if(e.SiteName == myarea){
-						if(e['PM2.5']<=15){
-							category = "良好";
-							color="0,232,0";
-						}else if(e['PM2.5']>=16 && e['PM2.5']<=35){
-							category = "普通";
-							color="255,255,0";
-						}else if(e['PM2.5']>=36 && e['PM2.5']<=54){
-							category = "對敏感族群不健康";
-							color="255,126,0";
-						}else if(e['PM2.5']>=55 && e['PM2.5']<=150){
-							category = "對所有族群不健康";
-							colo25r="255,0,0";
-						}else if(e['PM2.5']>=151 && e['PM2.5']<=250){
-							category = "非常不健康";
-							color="143,63,151";
-						}else if(e['PM2.5']>=251 && e['PM2.5']<=350){
-							category = "危害";
-							color="126,0,35";
-						}else if(e['PM2.5']>=351 && e['PM2.5']<=500){
-							category = "危害";
-							color="126,0,35";
-						}
-						$content.append('<tr><td>'+myarea+'</td>'+
-										'<td><i class="fa fa-circle" style="color:rgb('+color+');"></i>　'+e['PM2.5']+'</td>'+
-										'<td>'+category+'</td></tr>');
-						changeColor(color);
-					}
-				});
+				getValue();
 			});
+		});
+	}
+
+	function getValue(){
+		myarea = $area.val();
+		$content.html('');
+		data.forEach(function(e,i){
+			if(e.SiteName == myarea){
+				if(e['PM2.5']<=15){
+					category = "良好";
+					color="0,232,0";
+				}else if(e['PM2.5']>=16 && e['PM2.5']<=35){
+					category = "普通";
+					color="255,255,0";
+				}else if(e['PM2.5']>=36 && e['PM2.5']<=54){
+					category = "對敏感族群不健康";
+					color="255,126,0";
+				}else if(e['PM2.5']>=55 && e['PM2.5']<=150){
+					category = "對所有族群不健康";
+					colo25r="255,0,0";
+				}else if(e['PM2.5']>=151 && e['PM2.5']<=250){
+					category = "非常不健康";
+					color="143,63,151";
+				}else if(e['PM2.5']>=251 && e['PM2.5']<=350){
+					category = "危害";
+					color="126,0,35";
+				}else if(e['PM2.5']>=351 && e['PM2.5']<=500){
+					category = "危害";
+					color="126,0,35";
+				}
+				$content.append('<tr><td>'+myarea+'</td>'+
+								'<td><i class="fa fa-circle" style="color:rgb('+color+');"></i>　'+e['PM2.5']+'</td>'+
+								'<td>'+category+'</td></tr>');
+				changeColor(color);
+			}
 		});
 	}
 
