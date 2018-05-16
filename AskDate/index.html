@@ -15,11 +15,12 @@
 
     <script>
         setup();
-        var clickbtn = document.getElementById("clickbtn");
+        var clickbtn = docu1ment.getElementById("clickbtn");
 
         clickbtn.addEventListener('click', function (event) {
             cpf.initSpeechRecognition("cmn-Hant-TW");
             cpf.request('["grove_rgblcd_clear"]');
+            cpf.request('["grove_rgblcd_print", 0, 1, "Hello World"]');
         });
 
         function GetRecognizeResult(Result, Type) {
