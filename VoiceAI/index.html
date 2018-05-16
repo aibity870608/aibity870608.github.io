@@ -106,7 +106,7 @@
                 cpf.request('["analogWrite", 6, ' + i + ']');
             }
 
-        } else if (Result.includes("好冷")) {
+        } else if (Result.includes("好冷")||Result.includes("如果你冷")) {
             cpf.request('["grove_rgblcd_set_rgb", 255, 0, 0]'); //red
             cpf.request('["grove_rgblcd_clear"]');
             cpf.request('["grove_rgblcd_print", 0, 0, "red"]');
