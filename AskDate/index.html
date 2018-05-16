@@ -36,8 +36,8 @@
 
                 cpf.request('["grove_rgblcd_set_rgb", 0, 255, 0]');
                 cpf.request('["grove_rgblcd_clear"]');
-                console.log(Today.getFullYear().toString + " / "
-                    + (Today.getMonth().toString + 1) + " / " + Today.getDate().toString);
+                console.log(Today.getFullYear() + " / "
+                    + (Today.getMonth() + 1) + " / " + Today.getDate());
                 cpf.request('["grove_rgblcd_print", 0, 1, ' + Today.getFullYear() + " / "
                     + (Today.getMonth() + 1) + " / " + Today.getDate() +']');
 
