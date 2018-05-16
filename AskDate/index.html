@@ -33,8 +33,10 @@
                 cpf.SetSpeech("On", "cmn-Hant-TW", "今天日期是 " + Today.getFullYear() + " 年 "
                     + (Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日", 1, 1);
 
-                cpf.request('["grove_rgblcd_set_rgb", 255, 0, 0]');
+                cpf.request('["grove_rgblcd_set_rgb", 0, 255, 0]');
                 cpf.request('["grove_rgblcd_clear"]');
+                consloe.log(Today.getFullYear().toString + " / "
+                    + (Today.getMonth().toString + 1) + " / " + Today.getDate().toString);
                 cpf.request('["grove_rgblcd_print", 0, 1, ' + Today.getFullYear().toString + " / "
                     + (Today.getMonth().toString + 1) + " / " + Today.getDate().toString +']');
 
