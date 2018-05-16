@@ -16,7 +16,6 @@
     <script>
         setup();
         var clickbtn = document.getElementById("clickbtn");
-        cpf.request('["grove_rgblcd_print", 0, 1, "Hello World"]');
 
         clickbtn.addEventListener('click', function (event) {
             cpf.initSpeechRecognition("cmn-Hant-TW");
@@ -34,6 +33,7 @@
                     + (Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日", 1, 1);
 
                 cpf.request('["grove_rgblcd_set_rgb", 255, 0, 0]');
+                cpf.request('["grove_rgblcd_clear"]');
                 cpf.request('["grove_rgblcd_print", 0, 1, ' + Today.getFullYear() + " / "
                     + (Today.getMonth() + 1) + " / " + Today.getDate() +']');
 
