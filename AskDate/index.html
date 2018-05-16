@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Voice AI</h1>
+    <button id="clickbtn">呼叫AI</button>
+    <br/>
+    <p id="words">none</p>
+
+
+    <script>
+        setup();
+        var clickbtn = document.getElementById("clickbtn");
+
+        clickbtn.addEventListener('click', function (event) {
+            cpf.initSpeechRecognition("cmn-Hant-TW");
+        });
+
+        function GetRecognizeResult(Result, Type) {
+            if (Result.includes("日期")) {
+                var Today = new Date();
+
+                document.getElementById("words").innerHTML =
+                    "今天日期是 " + Today.getFullYear() + " 年 "
+                    + (Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日";
+
+                cpf.SetSpeech("On", "cmn-Hant-TW", "今天日期是 " + Today.getFullYear() + " 年 "
+                    + (Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日", 1, 1);
+
+
+                cpf.request('["grove_rgblcd_print", 0, 0, ' + Today.getFullYear() + " / "
+                    + (Today.getMonth() + 1) + " / " + Today.getDate() +']');
+
+            }
+        }
+
+        function setup() {
+        if (cpf)
+            cpf.setPinMode('["resetPin"],["grove_rgblcd_begin", 16, 2]');
+    }
+    </script>
+</body>
+</html>
