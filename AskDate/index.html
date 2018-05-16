@@ -19,6 +19,7 @@
 
         clickbtn.addEventListener('click', function (event) {
             cpf.initSpeechRecognition("cmn-Hant-TW");
+            cpf.request('["grove_rgblcd_clear"]');
         });
 
         function GetRecognizeResult(Result, Type) {
