@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Voice AI</h1>
+    <h1>Ask Date</h1>
     <button id="clickbtn">呼叫AI</button>
     <br/>
     <p id="words">none</p>
@@ -31,20 +31,12 @@
                     "今天日期是 " + Today.getFullYear() + " 年 "
                     + (Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日";
 
-                cpf.SetSpeech("On", "cmn-Hant-TW", "今天日期是 " + Today.getFullYear() + " 年 "
-                    + (Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日", 1, 1);
+                cpf.SetSpeech("On", "cmn-Hant-TW", "今天日期是 " + Today.getFullYear() + " 年 " + (Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日", 1, 1);
 
                 cpf.request('["grove_rgblcd_set_rgb", 0, 255, 0]');
                 cpf.request('["grove_rgblcd_clear"]');
-                console.log(Today.getFullYear() + " / "
-                    + (Today.getMonth() + 1) + " / " + Today.getDate());
-                var dateYY =  Today.getFullYear(); 
-                
-                cpf.request('["grove_rgblcd_print", 0, 0, "'+Today.getFullYear()+'" ]');
-                
-
-                cpf.request('["grove_rgblcd_print", 0, 1, "' + Today.getFullYear() + " / "
-                    + (Today.getMonth() + 1) + " / " + Today.getDate()+'"]');
+                // cpf.request('["grove_rgblcd_print", 0, 0, "'+Today.getFullYear()+'" ]');
+                cpf.request('["grove_rgblcd_print", 0, 1, "' + Today.getFullYear() + " / " + (Today.getMonth() + 1) + " / " + Today.getDate()+'"]');
 
             }
         }

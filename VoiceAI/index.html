@@ -14,22 +14,6 @@
     <br/>
     <p id="words">none</p>
 
-    <p id="light">light</p>
-    <br/>
-    <div class="col-xs-4">
-        <div class="form-group">
-              <select id="city" class="form-control">
-                  <option value="choose">請選擇</option>
-              </select>
-        </div>
-    </div>
-    <div class="col-xs-4">
-        <div class="form-group">
-              <select id="area" class="form-control">
-                  <option value="choose">請選擇</option>
-              </select>
-        </div>
-    </div>
 
 <script>
     var i;
@@ -55,44 +39,28 @@
     // 　　　}
     // }
 
-    function ForLoop() {
-        setTimeout(function () {
-            document.getElementById("light").innerHTML = i;
-            cpf.request('["grove_setColorRGB", 0, 0, 0, ' + i + ']');
-            i+=5;
-            if (i < 255) {
-                ForLoop();
-            } else if(i == 255) ForLoop2();
-        }, 200)
-    }
+    // function ForLoop() {
+    //     setTimeout(function () {
+    //         document.getElementById("light").innerHTML = i;
+    //         cpf.request('["grove_setColorRGB", 0, 0, 0, ' + i + ']');
+    //         i+=5;
+    //         if (i < 255) {
+    //             ForLoop();
+    //         } else if(i == 255) ForLoop2();
+    //     }, 200)
+    // }
 
-    function ForLoop2() {
-        setTimeout(function () {
-            i=255;
-            document.getElementById("light").innerHTML = i;
-            cpf.request('["grove_setColorRGB", 0, 0, 0, ' + i + ']');
-            i-=10;
-            if (i > 0) {
-                ForLoop2();
-            } else ForLoop();
-        }, 200)
-    }
 
     function GetRecognizeResult(Result, Type) {
-        if (Result.includes("綠色")) {
-            cpf.request('["grove_rgblcd_set_rgb", 0, 255, 0]'); //green
-            cpf.request('["grove_rgblcd_clear"]');
-            cpf.request('["grove_rgblcd_print", 0, 0, "the light is green"]');//how are you
-            document.getElementById("words").innerHTML = "the light is green";
-            cpf.SetSpeech("Off", "cmn-Hant-TW", "早安", 1, 1);
-
-        } else if (Result.includes("呼吸燈")) {
-            cpf.request('["grove_rgblcd_set_rgb", 0, 0, 255]'); //blue
+        if (Result.includes("呼吸燈")) {
             cpf.request('["grove_rgblcd_clear"]');
             cpf.request('["grove_rgblcd_print", 0, 0, "light on"]');
-            document.getElementById("words").innerHTML = Result;
-            i = 0;
-            ForLoop();
+            for (i = 0; i < 255; i += 10) {
+                cpf.request('["grove_setColorRGB", 0, 0, 0, ' + i + ']');
+            }
+            for (i = 255; i > 0; i -= 10) {
+                cpf.request('["grove_setColorRGB", 0, 0, 0, ' + i + ']');
+            }
             cpf.SetSpeech("Off", "cmn-Hant-TW", Result, 1, 2);
 
 
@@ -121,16 +89,11 @@
                 "今天日期是 " + Today.getFullYear() + " 年 "
                 + (Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日";
 
-            cpf.SetSpeech("On", "cmn-Hant-TW", "今天日期是 " + Today.getFullYear() + " 年 "
-                + (Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日", 1, 1);
-
+            cpf.SetSpeech("On", "cmn-Hant-TW", "今天日期是 " + Today.getFullYear() + " 年 " + (Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日", 1, 1);
 
             cpf.request('["grove_rgblcd_set_rgb", 255, 0, 0]');
             cpf.request('["grove_rgblcd_clear"]');
-                console.log(Today.getFullYear().toString + " / "
-                    + (Today.getMonth().toString + 1) + " / " + Today.getDate().toString);
-                cpf.request('["grove_rgblcd_print", 0, 1, ' + Today.getFullYear().toString + " / "
-                    + (Today.getMonth().toString + 1) + " / " + Today.getDate().toString +']');
+            cpf.request('["grove_rgblcd_print", 0, 1, ' + Today.getFullYear().toString + " / " + (Today.getMonth().toString + 1) + " / " + Today.getDate().toString +']');
 
         } else if (Result.includes("幾點")) {
             var Today = new Date();
