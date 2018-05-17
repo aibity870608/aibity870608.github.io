@@ -65,20 +65,14 @@
 
 
         } else if (Result.includes("好熱")|| Result.includes("我知道你熱")) {
-            cpf.request('["grove_rgblcd_set_rgb", 255, 0, 0]'); //red
-            cpf.request('["grove_rgblcd_clear"]');
-            cpf.request('["grove_rgblcd_print", 0, 0, "red"]');
-            document.getElementById("words").innerHTML = "red " + Result;
-            cpf.SetSpeech("On", "cmn-Hant-TW", "風扇來囉", 0.5, 2);
+            document.getElementById("words").innerHTML = Result;
+            cpf.SetSpeech("On", "cmn-Hant-TW", "風扇來囉", 1, 2);
             for (i = 0; i < 255; i += 10) {
                 cpf.request('["analogWrite", 6, ' + i + ']');
             }
 
-        } else if (Result.includes("好冷")||Result.includes("如果你冷")) {
-            cpf.request('["grove_rgblcd_set_rgb", 255, 0, 0]'); //red
-            cpf.request('["grove_rgblcd_clear"]');
-            cpf.request('["grove_rgblcd_print", 0, 0, "red"]');
-            document.getElementById("words").innerHTML = "red " + Result;
+        } else if (Result.includes("好冷") || Result.includes("如果你冷")) {
+            document.getElementById("words").innerHTML = Result;
             cpf.SetSpeech("On", "cmn-Hant-TW", "已幫您關電扇了", 1, 1);
             cpf.request('["analogWrite", 6, 0]');
 
