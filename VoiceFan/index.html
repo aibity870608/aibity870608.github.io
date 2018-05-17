@@ -28,7 +28,6 @@
                 for (i = 0; i < 255; i += 10) {  //風扇漸快
                     cpf.request('["analogWrite", 6, ' + i + ']');
                 }
-
             } else if (Result.includes("好冷") || Result.includes("如果你冷")) {
                 document.getElementById("words").innerHTML = Result;
                 cpf.SetSpeech("On", "cmn-Hant-TW", "已幫您關電扇了", 1, 1);
