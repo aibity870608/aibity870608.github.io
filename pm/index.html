@@ -101,15 +101,16 @@
 </body>
 <script>
 	setup();
-    var clickbtn = document.getElementById("clickbtn");
+    	var clickbtn = document.getElementById("clickbtn");
 	var category, mycity, myarea;
+	var $city = $('#city');
+	var $area = $('#area');
+	var $content = $('#content');
+	var county = [];
+	var result;
 
 	window.onload = function(){
-		var $city = $('#city');
-		var $area = $('#area');
-		var $content = $('#content');
-		var county = [];
-		var result;
+		
 		$.get('http://opendata2.epa.gov.tw/AQX.json',function(data){
 			data.forEach(function(e,i){
 				county[i] = e.County;
