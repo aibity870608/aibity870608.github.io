@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+	<title>UVI紫外線指數</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<title>JS Bin</title>
+	<style>
+		body{
+			font-family: "Lucida Console","微軟正黑體","Arial",sans-serif;
+			overflow-x: hidden;
+			overflow-y: auto;
+		}
+		#top{
+			padding: 20px 40px 20px;
+		}
+		#bottom{
+			padding:0px 60px 20px;
+		}
+		.form-group select{
+			width: 90%;
+			font-size: 16px;
+		}
+		table{
+			font-size: 16px;
+		}
+		.form-control{
+			height: 50px;
+			padding: 10px 15px;
+		}
+		.btn{
+			padding: 12px 18px;
+			font-size: 16px;
+		}
+		img{
+			width:80%;
+			margin:40px 0 20px;
+		}
+		@media (max-width: 800px) {
+			img{
+				width:95%;
+			}
+		}
+		@media (max-width: 500px) {
+			#top{
+				padding: 20px 0 0 0;
+			}
+			#bottom{
+				padding:20px;
+			}
+			#top h1{
+				font-size: 32px;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div class="row" align="center" id="top">
+		<div align="center" class="col-xs-12">
+			<h1>UVI紫外線指數</h1>
+		</div>
+  		<div align="center" class="col-xs-12 col-md-8 col-md-offset-2" style="margin-top: 2em;">
+  			<div class="col-xs-4">
+	    		<div class="form-group">
+	      			<select id="city" class="form-control">
+	      				<option value="choose">請選擇</option>
+	      			</select>
+	    		</div>
+	    	</div>
+	    	<div class="col-xs-4">
+	    		<div class="form-group">
+	      			<select id="area" class="form-control">
+	      				<option value="choose">請選擇</option>
+	      			</select>
+	    		</div>
+	    	</div>
+  		</div>
+	</div>
+	<div class="row" id="bottom">
+		<div class="col-xs-12 col-md-8 col-md-offset-2">
+			<table class="table table-striped">
+			    <thead>
+			      	<tr>
+			      		<th>區域</th>
+			      		<th>紫外線指數</th>
+				        <th>指標</th>
+			      	</tr>
+			    </thead>
+			    <tbody id="content">
+			    </tbody>
+			</table>
+		</div>
+	</div>
+	<button id="clickbtn">呼叫AI</button>
+    <br/>
+    <p id="words">none</p>
+
+    <p id="light">light</p>
+    <br/>
+
+</body>
+<script>
+	setup();
+    var clickbtn = document.getElementById("clickbtn");
+	var category, mycity;
+
+	var $city = $('#city');
+    var $area = $('#area');
+    var $content = $('#content');
+    var county = [];
+    var result;
+    var UVI, mycity, myarea;
+    
+    window.onload = function(){
+        $.get('http://opendata2.epa.gov.tw/UV/UV.json',function(data){
+			data.forEach(function(e,i){
+				county[i] = e.County;
+			});
+
+            result = county.filter(function(value, index, arr){
+                return arr.indexOf(value) === index; //distinct
+            });
+
+            result.forEach(function(e){
+                $city.append('<option value="' + e + '">' + e + '</option>');
+            });
+
+			$( "#city" ).change(function () {
+				mycity = $city.val();
+				$area.html('');
+				data.forEach(function(e,i){
+					if(e.County == mycity){
+						$area.append('<option value="' + e.SiteName + '">'  +e.SiteName + '</option>');
+					}
+				});
+
+                myarea = $area.val();
+                $content.html('');
+                data.forEach(function(e,i){
+                    if(e.SiteName == myarea){
+                        UVI = e['UVI'];
+                        $content.append('<tr><td>'+myarea+'</td>'+
+                                        '<td>'+e['UVI']+'</td></tr>');
+                    }
+                });
+			});
+
+            $( "#area" ).change(function () {
+                myarea = $area.val();
+                $content.html('');
+                data.forEach(function(e,i){
+                    if(e.SiteName == myarea){
+                        UVI = e['UVI'];
+                        $content.append('<tr><td>'+myarea+'</td>'+
+                                        '<td>'+e['UVI']+'</td></tr>');
+                    }
+                });
+            });
+        });
+
+    }
+
+    clickbtn.addEventListener('click', function (event) {
+        cpf.initSpeechRecognition("cmn-Hant-TW");
+    });
+
+	//LED燈顏色設定
+	function changeColor(color){
+		if(cpf){ 
+			cpf.request('["grove_setColorRGB", 0, ' + color + ']');
+		}
+	}
+	//cpf設定
+	function setup(){
+		if(cpf) 
+			cpf.setPinMode('["resetPin"],["grove_newChainableLED", 7, 8, 1]'); 
+	}
+
+    function GetRecognizeResult(Result, Type) {
+        if (Result.includes("紫外線") || Result.includes("太陽")) {
+            cpf.SetSpeech("Off", "cmn-Hant-TW", myarea + "的紫外線指數為" + UVI, 1, 1);
+
+        }
+    }
+</script>
+</html>

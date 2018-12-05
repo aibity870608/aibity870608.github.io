@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Control Your Fan</title>
+</head>
+<body>
+    <h1>Control Your Fan</h1>
+    <button id="clickbtn">呼叫AI</button>
+    <br/>
+    <p id="words">none</p>
+    
+    <script>
+        var clickbtn = document.getElementById("clickbtn");
+        setup();
+        cpf.request('["analogWrite", 6, 0]');
+
+        clickbtn.addEventListener('click', function (event) {
+            cpf.initSpeechRecognition("cmn-Hant-TW");
+        });
+
+        function GetRecognizeResult(Result, Type) {
+            if (Result.includes("好熱")|| Result.includes("我知道你熱")) {
+                document.getElementById("words").innerHTML = Result;
+                cpf.SetSpeech("On", "cmn-Hant-TW", "風扇來囉", 1, 2);
+                for (i = 0; i < 255; i += 10) {  //風扇漸快
+                    cpf.request('["analogWrite", 6, ' + i + ']');
+                }
+            } else if (Result.includes("好冷") || Result.includes("如果你冷")) {
+                document.getElementById("words").innerHTML = Result;
+                cpf.SetSpeech("On", "cmn-Hant-TW", "已幫您關電扇了", 1, 1);
+                cpf.request('["analogWrite", 6, 0]'); //停止風扇
+            }
+        }
+
+        function setup() {
+            if (cpf)
+                cpf.setPinMode('["resetPin"], ["setPinMode", "digital", 6, "PWM"]');
+        }
+        
+    </script>
+</body>
+</html>
