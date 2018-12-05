@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<head>
+<title>Easy Control</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="main.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+</head>
+<body>
+<font id="title">Easy Control</font><p><br>
+
+<div id="content" class="row">
+	<div class="col-sm-12  col-xs-12">
+        <span class="analogvalue" id="d2">none</span><br>
+        <button onClick="light();">click me</button>
+        <button onClick="off();">off</button>
+	</div>
+</div>
+
+<script>
+	
+	var led;
+	setup();
+	// Analog
+	function loop() {
+		if(cpf){
+	
+			led = cpf.get("d2");
+			document.getElementById("d2").innerHTML = led;
+			
+		}
+		setTimeout(loop, 1000);
+	}
+	loop();
+
+
+	function light(){
+        cpf.set("d2", 1);
+    }
+
+    function off(){
+        cpf.set("d2", 0);
+    }
+	
+	// cpf setup
+	function setup(){
+		if(cpf)
+			cpf.setPinMode('["resetPin"],["setPinMode", "digital", 2, "OUTPUT"]'); 
+	}
+	
+</script>
+</body>
+</html>
