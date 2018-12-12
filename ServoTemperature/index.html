@@ -45,6 +45,8 @@
 					document.getElementById("pointer").style.transform = "rotate(" + degree + "deg)";
 					document.getElementById("degree").innerHTML = degree;
 					cpf.request('["analogWrite", 4,' + Math.abs(degree-180) + ']');
+					
+					cpf.request('["grove_rgblcd_print", 0, 1, "celcius = ' + celsius + '"]');
 				}			
 			}
 			setTimeout(loop, 1000);
@@ -61,7 +63,8 @@
 		// cpf setup
 		function setup(){
 			if(cpf){
-				cpf.setPinMode('["resetPin"] ,["setPinMode", "analog", 1,"INPUT"], ["setPinMode", "digital", 4, "SERVO"]');
+				cpf.setPinMode('["resetPin"] ,["setPinMode", "analog", 1,"INPUT"], ["setPinMode", "digital", 4, "SERVO"], ["grove_rgblcd_begin", 16, 2]');
+				cpf.request('["grove_rgblcd_clear"]');
 			}
 		}
     </script>
