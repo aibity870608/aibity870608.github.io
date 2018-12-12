@@ -64,8 +64,8 @@
 		// cpf setup
 		function setup(){
 			if(cpf){
-				cpf.setPinMode('["resetPin"] ,["setPinMode", "analog", 1,"INPUT"], ["setPinMode", "digital", 4, "SERVO"], ["grove_rgblcd_begin", 16, 2]');
-				cpf.request('["grove_rgblcd_clear"]');
+				cpf.setPinMode('["resetPin"] ,["setPinMode", "analog", 1,"INPUT"], ["setPinMode", "digital", 4, "SERVO"], ["setPinMode","grove_rgblcd_begin", 16, 2]');
+				//cpf.request('["grove_rgblcd_clear"]');
 				cpf.request('["grove_rgblcd_set_rgb", 250, 246, 0]');
 			}
 		}
