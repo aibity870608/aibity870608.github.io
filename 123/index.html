@@ -33,20 +33,6 @@
 </body>
 <script>
     $(function(){
-        setup();
-
-        function setup(){
-			if(cpf){
-				cpf.setPinMode('["resetPin"] ,["setPinMode", "digital", 6, "TONE"]');
-			}
-        }
-        
-        function beep(times){
-            for (let index = 0; index < times; index++) {
-                cpf.request('["tone_play", 6, 698, 300], ["sleep", 300]');
-            }
-        }
-
         $.get('http://opendata2.epa.gov.tw/UV/UV.json', function(data){
 
             var a = [];
@@ -64,7 +50,7 @@
                 $('#SiteName').html('');
                 $('#SiteName').append(new Option("請選擇...", 0));
                 var c = $(this).val();
-
+                
                 for (let i = 0; i < data.length; i++) {
                     if(data[i]['County'] == c){
                         $('#SiteName').append(new Option(data[i]['SiteName'], data[i]['SiteName']));
@@ -83,21 +69,34 @@
                         switch (uvi) {
                             case 0-2:
                                 $('#result').html("UVI = " + data[i]['UVI'] + "：微量級");
-                                //beep(1);
-                                cpf.request('["tone_play", 6, 698, 300], ["sleep", 300]');
+                                beep(1);
                                 break;
                             case 3-5:
                                 $('#result').html("UVI = " + data[i]['UVI'] + "：低量級");
-                                beep(3);
+                                //beep(3);
                                 break;
                             default:
-                                $('#result').html("沒有UVI");
+                                //$('#result').html("沒有UVI");
                                 break;
                         }
                     }
                 }
             });
         });
+
+        setup();
+
+        function setup(){
+			if(cpf){
+				cpf.setPinMode('["resetPin"] ,["setPinMode", "digital", 6, "TONE"]');
+			}
+        }
+        
+        function beep(times){
+            for (let index = 0; index < times; index++) {
+                cpf.request('["tone_play", 6, 698, 300], ["sleep", 300]');
+            }
+        }
     });
 </script>
 </html>
