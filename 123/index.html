@@ -73,10 +73,11 @@
                         var uvi = Number(uvi1);
                         switch (true) {
                             case (uvi == 0):
-                                $('#result').html("UVI = 沒有拉幹");
+                            $('#result').html("UVI = " + data[i]['UVI'] + "：沒有");
                                 break;
                             case (uvi <= 2):
                                 $('#result').html("UVI = " + data[i]['UVI'] + "：微量級");
+                                cpf.request('["tone_play", 6, 698, 300], ["sleep", 300]');
                                 break;
                             case (uvi <= 5):
                                 $('#result').html("UVI = " + data[i]['UVI'] + "：低量級");
@@ -93,7 +94,7 @@
         function setup() {
             if (cpf) {
                 cpf.setPinMode('["resetPin"] ,["setPinMode", "digital", 6, "TONE"]');
-                cpf.request('["tone_play", 6, 698, 300], ["sleep", 300]');
+                //cpf.request('["tone_play", 6, 698, 300], ["sleep", 300]');
             }
         }
 
