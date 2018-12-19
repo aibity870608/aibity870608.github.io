@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
     <title>Document</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -21,9 +21,10 @@
                         <select name="" id="County" class="form-control form-control-lg">
                             <option value="0">請選擇...</option>
                         </select>
-                        <select name="" id="" class="form-control form-control-lg">
+                        <select name="" id="SiteName" class="form-control form-control-lg">
                             <option value="0">請選擇...</option>
                         </select>
+                        <div id="result"></div>
                     </div>
                 </form>
             </div>
@@ -32,27 +33,71 @@
 </body>
 <script>
     $(function(){
+        setup();
+
+        function setup(){
+			if(cpf){
+				cpf.setPinMode('["resetPin"] ,["setPinMode", "digital", 6, "TONE"]');
+			}
+        }
+        
+        function beep(times){
+            for (let index = 0; index < times; index++) {
+                cpf.request('["tone_play", 6, 698, 300], ["sleep", 300]');
+            }
+        }
+
         $.get('http://opendata2.epa.gov.tw/UV/UV.json', function(data){
+
             var a = [];
             for (let index = 0; index < data.length; index++) {
-                console.log(data[index]["County"]);
                 a.push(data[index]["County"]);
             }
             b = a.filter(function(value, index, arr){
                 return arr.indexOf(value) === index;
             })
             b.forEach(function(e, i){
-                $('#County').append(new Option(e, i+1));
+                $('#County').append(new Option(e, e));
+            });
+
+            $('#County').change(function(){
+                $('#SiteName').html('');
+                $('#SiteName').append(new Option("請選擇...", 0));
+                var c = $(this).val();
+
+                for (let i = 0; i < data.length; i++) {
+                    if(data[i]['County'] == c){
+                        $('#SiteName').append(new Option(data[i]['SiteName'], data[i]['SiteName']));
+                    }
+                }
+            });
+
+            $('#SiteName').change(function(){
+                var c = $('#County').val();
+                var sn = $(this).val();
+
+                alert(sn);
+
+                for (let i = 0; i < data.length; i++) {
+                    if(data[i]['County'] == c && data[i]['SiteName'] == sn){
+                        
+                        var uvi = data[i]['UVI'];
+                        switch (uvi) {
+                            case 0-2:
+                                $('#result').html("UVI = " + data[i]['UVI'] + "：微量級");
+                                beep(1);
+                                break;
+                            case 3-5:
+                                $('#result').html("UVI = " + data[i]['UVI'] + "：低量級");
+                                beep(3);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
             });
         });
-
-        setup();
-        function setup(){
-			if(cpf){
-				cpf.setPinMode('["resetPin"] ,["setPinMode", "digital", 6, "TONE"]');
-				cpf.request('["tone_play", 6, 698, 300], ["sleep", 300]');
-			}
-		}
     });
 </script>
 </html>
