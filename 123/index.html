@@ -37,7 +37,7 @@
     $(function () {
         
 
-        $.get('http://opendata2.epa.gov.tw/UV/UV.json', function (data) {
+        $.get('https://opendata2.epa.gov.tw/UV/UV.json', function (data) {
 
             var a = [];
             for (let index = 0; index < data.length; index++) {
@@ -71,7 +71,7 @@
 
                         var uvi1 = data[i]['UVI'];
                         var uvi = Number(uvi1);
-                        alert(uvi);
+                        uvi = 2;
                         switch (true) {
                             case (uvi == 0):
                                 $('#result').html("UVI = 沒有拉幹");
