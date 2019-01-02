@@ -45,6 +45,8 @@
         var drink_press = 0;
         var total = 0;
         var drinktime;
+        now_press = cpf.get("socket d6");
+        
 
         var slug = false;
         var cupout = false;
@@ -54,29 +56,27 @@
         function loop() {
             temp = cpf.get("socket d6");
             now_press = cpf.get("socket d6");
-            // now_press = now_press * 2;
-
-            // document.getElementById("temp").innerHTML = toCelsius(temp) + '℃';
-            document.getElementById("result").innerHTML = now_press + '公克';
+            console.log(now_press);
+            // document.getElementById("result").innerHTML = now_press + '公克';
             
-            if (now_press == 0) {
-                drink_press = prev_press;
-                drinktime = Date.now();
-                slug = true;
-            } else {
-                if (slug) {
-                    if (Date.now() - drinktime >= 3000) {
-                        if (drink_press - now_press > 20) {
-                            total += drink_press - now_press;
-                        }
-                        slug = false;
-                    }
-                }
-                prev_press = now_press;
-            }
-            console.log("now_press",now_press);
-            console.log("temp",temp);
-            console.log("total",total);
+            // if (now_press == 0) {
+            //     drink_press = prev_press;
+            //     drinktime = Date.now();
+            //     slug = true;
+            // } else {
+            //     if (slug) {
+            //         if (Date.now() - drinktime >= 3000) {
+            //             if (drink_press - now_press > 20) {
+            //                 total += drink_press - now_press;
+            //             }
+            //             slug = false;
+            //         }
+            //     }
+            //     prev_press = now_press;
+            // }
+            // console.log("now_press",now_press);
+            // console.log("temp",temp);
+            // console.log("total",total);
         }
 
         // $.get('http://opendata2.epa.gov.tw/UV/UV.json', function (data) {
