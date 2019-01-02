@@ -40,13 +40,13 @@
 <script>
     $(function () {
         var temp = 0;
-        var now_press = 0;
+        var now_press;
         var prev_press = 0;
         var drink_press = 0;
         var total = 0;
         var drinktime;
         now_press = cpf.get("socket d6");
-        
+        console.log(now_press);
 
         var slug = false;
         var cupout = false;
