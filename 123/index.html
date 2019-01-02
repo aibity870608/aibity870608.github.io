@@ -36,10 +36,10 @@
 </body>
 <script>
     $(function () {
-        var temp;
+        var temp = 0;
         var now_press = 0;
-        var prev_press;
-        var drink_press;
+        var prev_press = 0;
+        var drink_press = 0;
         var total = 0;
         var drinktime;
 
@@ -53,7 +53,7 @@
             now_press = cpf.get("socket d6");
             // now_press = now_press * 2;
 
-            document.getElementById("temp").innerHTML = toCelsius(temp) + '℃';
+            // document.getElementById("temp").innerHTML = toCelsius(temp) + '℃';
             document.getElementById("weight").innerHTML = now_press + '公克';
 
             if (now_press == 0) {
@@ -71,63 +71,65 @@
                 }
                 prev_press = now_press;
             }
-            console.log(now_press);
+            console.log("now_press",now_press);
+            console.log("temp",temp);
+            console.log("total",total);
         }
 
-        $.get('http://opendata2.epa.gov.tw/UV/UV.json', function (data) {
+        // $.get('http://opendata2.epa.gov.tw/UV/UV.json', function (data) {
 
-            var a = [];
-            for (let index = 0; index < data.length; index++) {
-                a.push(data[index]["County"]);
-            }
-            b = a.filter(function (value, index, arr) {
-                return arr.indexOf(value) === index;
-            })
-            b.forEach(function (e, i) {
-                $('#County').append(new Option(e, e));
-            });
+        //     var a = [];
+        //     for (let index = 0; index < data.length; index++) {
+        //         a.push(data[index]["County"]);
+        //     }
+        //     b = a.filter(function (value, index, arr) {
+        //         return arr.indexOf(value) === index;
+        //     })
+        //     b.forEach(function (e, i) {
+        //         $('#County').append(new Option(e, e));
+        //     });
 
-            $('#County').change(function () {
-                $('#SiteName').html('');
-                $('#SiteName').append(new Option("請選擇...", 0));
-                var c = $(this).val();
+        //     $('#County').change(function () {
+        //         $('#SiteName').html('');
+        //         $('#SiteName').append(new Option("請選擇...", 0));
+        //         var c = $(this).val();
 
-                for (let i = 0; i < data.length; i++) {
-                    if (data[i]['County'] == c) {
-                        $('#SiteName').append(new Option(data[i]['SiteName'], data[i]['SiteName']));
-                    }
-                }
-            });
+        //         for (let i = 0; i < data.length; i++) {
+        //             if (data[i]['County'] == c) {
+        //                 $('#SiteName').append(new Option(data[i]['SiteName'], data[i]['SiteName']));
+        //             }
+        //         }
+        //     });
 
-            $('#SiteName').change(function () {
-                var c = $('#County').val();
-                var sn = $(this).val();
+        //     $('#SiteName').change(function () {
+        //         var c = $('#County').val();
+        //         var sn = $(this).val();
 
-                for (let i = 0; i < data.length; i++) {
-                    if (data[i]['County'] == c && data[i]['SiteName'] == sn) {
+        //         for (let i = 0; i < data.length; i++) {
+        //             if (data[i]['County'] == c && data[i]['SiteName'] == sn) {
 
-                        var uvi1 = data[i]['UVI'];
-                        var uvi = Number(uvi1);
-                        switch (true) {
-                            case (uvi == 0):
-                                $('#result').html("UVI = " + data[i]['UVI'] + "：沒有");
-                                cpf.request('["tone_play", 6, 698, 300], ["sleep", 300]');
-                                cpf.request('["tone_play", 6, 698, 300], ["sleep", 300]');
-                                cpf.request('["tone_play", 6, 698, 300], ["sleep", 300]');
-                                break;
-                            case (uvi <= 2):
-                                $('#result').html("UVI = " + data[i]['UVI'] + "：微量級");
-                                cpf.request('["tone_play", 6, 698, 300], ["sleep", 300]');
-                                break;
-                            case (uvi <= 5):
-                                $('#result').html("UVI = " + data[i]['UVI'] + "：低量級");
-                                break;
+        //                 var uvi1 = data[i]['UVI'];
+        //                 var uvi = Number(uvi1);
+        //                 switch (true) {
+        //                     case (uvi == 0):
+        //                         $('#result').html("UVI = " + data[i]['UVI'] + "：沒有");
+        //                         cpf.request('["tone_play", 6, 698, 300], ["sleep", 300]');
+        //                         cpf.request('["tone_play", 6, 698, 300], ["sleep", 300]');
+        //                         cpf.request('["tone_play", 6, 698, 300], ["sleep", 300]');
+        //                         break;
+        //                     case (uvi <= 2):
+        //                         $('#result').html("UVI = " + data[i]['UVI'] + "：微量級");
+        //                         cpf.request('["tone_play", 6, 698, 300], ["sleep", 300]');
+        //                         break;
+        //                     case (uvi <= 5):
+        //                         $('#result').html("UVI = " + data[i]['UVI'] + "：低量級");
+        //                         break;
 
-                        }
-                    }
-                }
-            });
-        });
+        //                 }
+        //             }
+        //         }
+        //     });
+        // });
 
         setup();
 
