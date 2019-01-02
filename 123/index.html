@@ -16,7 +16,7 @@
         <div class="card">
             <button id="cbtn">按三小</button>
             <div id="result">
-                
+
             </div>
             <!-- <div class="card-title">
                 UV測量
@@ -39,44 +39,42 @@
 </body>
 <script>
     $(function () {
-        var temp = 0;
-        var now_press;
-        var prev_press = 0;
-        var drink_press = 0;
-        var total = 0;
-        var drinktime;
-        now_press = cpf.get("socket d6");
-        console.log(now_press);
+        var left_init_drink = 0;
+        var right_init_drink = 0;
+        var left_drink;
+        var right_drink;
+        var left_val;
+        var right_val;
+
+        left_init_drink = cpf.get("socket a0");
+        right_init_drink = cpf.get("socket a3");
+        console.log(left_init_drink);
+        console.log(right_init_drink);
 
         var slug = false;
         var cupout = false;
 
         setInterval(loop, 1000);
 
+        $("#cbtn").click(function () {
+            //馬達打開
+            // code
+            setInterval(loop, 1000);
+        });
         function loop() {
-            temp = cpf.get("socket d6");
-            now_press = cpf.get("socket d6");
-            console.log(now_press);
-            // document.getElementById("result").innerHTML = now_press + '公克';
-            
-            // if (now_press == 0) {
-            //     drink_press = prev_press;
-            //     drinktime = Date.now();
-            //     slug = true;
-            // } else {
-            //     if (slug) {
-            //         if (Date.now() - drinktime >= 3000) {
-            //             if (drink_press - now_press > 20) {
-            //                 total += drink_press - now_press;
-            //             }
-            //             slug = false;
-            //         }
-            //     }
-            //     prev_press = now_press;
-            // }
-            // console.log("now_press",now_press);
-            // console.log("temp",temp);
-            // console.log("total",total);
+
+            //判斷重量
+            left_drink = cpf.get("socket a0");
+            right_drink = cpf.get("socket a3");
+
+            console.log(left_drink);
+            console.log(right_drink);
+            if (left_init_drink - left_drink >= left_val) {
+                //馬達關起來
+            }
+            if (right_init_drink - right_drink >= right_val) {
+                //馬達關起來
+            }
         }
 
         // $.get('http://opendata2.epa.gov.tw/UV/UV.json', function (data) {
