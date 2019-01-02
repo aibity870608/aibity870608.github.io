@@ -15,6 +15,9 @@
     <div class="container">
         <div class="card">
             <button id="cbtn">按三小</button>
+            <div id="result">
+                
+            </div>
             <!-- <div class="card-title">
                 UV測量
             </div>
@@ -54,8 +57,8 @@
             // now_press = now_press * 2;
 
             // document.getElementById("temp").innerHTML = toCelsius(temp) + '℃';
-            document.getElementById("weight").innerHTML = now_press + '公克';
-
+            document.getElementById("result").innerHTML = now_press + '公克';
+            
             if (now_press == 0) {
                 drink_press = prev_press;
                 drinktime = Date.now();
