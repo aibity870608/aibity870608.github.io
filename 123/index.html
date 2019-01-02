@@ -14,7 +14,7 @@
 <body>
     <div class="container">
         <div class="card">
-            <button id="cbtn" value="按三小" onclick="loop()"></button>
+            <button id="cbtn">按三小</button>
             <!-- <div class="card-title">
                 UV測量
             </div>
@@ -37,14 +37,16 @@
 <script>
     $(function () {
         var temp;
-        var now_press;
+        var now_press = 0;
         var prev_press;
         var drink_press;
         var total = 0;
         var drinktime;
 
         var slug = false;
+        var cupout = false;
 
+        setInterval(loop, 1000);
 
         function loop() {
             temp = cpf.get("socket d6");
