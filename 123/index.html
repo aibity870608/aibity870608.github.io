@@ -9,16 +9,17 @@
     <title>Document</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="index.css">
 </head>
 
 <body>
     <div class="container">
         <div class="card">
-            <div class="row">
+            <div>
                 左方溶液重 (ml or g)：
                 <input id="leftbox" type="text">
             </div>
-            <div class="row">
+            <div>
                 右方溶液重 (ml or g)：
                 <input id="rightbox" type="text">
             </div>
@@ -38,12 +39,13 @@
         var left_val;
         var right_val;
 
+        $("#result").hide();
         console.log(left_init_drink);
         console.log(right_init_drink);
         setInterval(loop, 1000);
 
         $("#cbtn").click(function () {
-
+            $("#result").show();
             left_init_drink = cpf.get("socket a3");
             right_init_drink = cpf.get("socket a0");
             left_val = $("#leftbox").val();
