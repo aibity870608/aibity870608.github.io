@@ -14,26 +14,18 @@
 <body>
     <div class="container">
         <div class="card">
+            <div class="row">
+                左方溶液重 (ml or g)：
+                <input id="leftbox" type="text">
+            </div>
+            <div class="row">
+                右方溶液重 (ml or g)：
+                <input id="rightbox" type="text">
+            </div>
             <button id="cbtn">按三小</button>
             <div id="result">
-
+                好了啦
             </div>
-            <!-- <div class="card-title">
-                UV測量
-            </div>
-            <div class="card-body">
-                <form action="" method="POST">
-                    <div class="form-group">
-                        <select name="" id="County" class="form-control form-control-lg">
-                            <option value="0">請選擇...</option>
-                        </select>
-                        <select name="" id="SiteName" class="form-control form-control-lg">
-                            <option value="0">請選擇...</option>
-                        </select>
-                        <div id="result"></div>
-                    </div>
-                </form>
-            </div> -->
         </div>
     </div>
 </body>
@@ -46,106 +38,67 @@
         var left_val;
         var right_val;
 
-        left_init_drink = cpf.get("socket a0");
-        right_init_drink = cpf.get("socket a3");
         console.log(left_init_drink);
         console.log(right_init_drink);
-
-        var slug = false;
-        var cupout = false;
-
         setInterval(loop, 1000);
 
         $("#cbtn").click(function () {
-            //馬達打開
-            // code
-            setInterval(loop, 1000);
+
+            left_init_drink = cpf.get("socket a3");
+            right_init_drink = cpf.get("socket a0");
+            left_val = $("#leftbox").val();
+            right_val = $("#rightbox").val();
+
+            if (left_init_drink != 0 && right_init_drink != 0) {
+                if (left_val != 0 && right_val != 0) {
+                    //馬達打開
+                    cpf.request('["analogWrite", 4, 180 ]');
+                    cpf.request('["analogWrite", 8, 180 ]');
+
+                    // code
+                    setInterval(loop, 800);
+                } else {
+                    alert("請設定左、右溶液重");
+                }
+            } else {
+                alert("請確認左、右溶液已倒入");
+            }
+
         });
         function loop() {
 
             //判斷重量
-            left_drink = cpf.get("socket a0");
-            right_drink = cpf.get("socket a3");
+            left_drink = cpf.get("socket a3");
+            right_drink = cpf.get("socket a0");
 
             console.log(cpf.get("socket a0"));
             console.log(cpf.get("socket a3"));
-            if (left_init_drink - left_drink >= left_val) {
-                //馬達關起來
-            }
-            if (right_init_drink - right_drink >= right_val) {
-                //馬達關起來
+            if ((left_drink != 0 && right_drink != 0) && (left_init_drink - left_drink >= left_val) && (right_init_drink - right_drink >= right_val)) {
+                cpf.request('["analogWrite", 4, 0 ]');
+                cpf.request('["analogWrite", 8, 0 ]');
+
+                //init
+                init();
             }
         }
 
-        // $.get('http://opendata2.epa.gov.tw/UV/UV.json', function (data) {
-
-        //     var a = [];
-        //     for (let index = 0; index < data.length; index++) {
-        //         a.push(data[index]["County"]);
-        //     }
-        //     b = a.filter(function (value, index, arr) {
-        //         return arr.indexOf(value) === index;
-        //     })
-        //     b.forEach(function (e, i) {
-        //         $('#County').append(new Option(e, e));
-        //     });
-
-        //     $('#County').change(function () {
-        //         $('#SiteName').html('');
-        //         $('#SiteName').append(new Option("請選擇...", 0));
-        //         var c = $(this).val();
-
-        //         for (let i = 0; i < data.length; i++) {
-        //             if (data[i]['County'] == c) {
-        //                 $('#SiteName').append(new Option(data[i]['SiteName'], data[i]['SiteName']));
-        //             }
-        //         }
-        //     });
-
-        //     $('#SiteName').change(function () {
-        //         var c = $('#County').val();
-        //         var sn = $(this).val();
-
-        //         for (let i = 0; i < data.length; i++) {
-        //             if (data[i]['County'] == c && data[i]['SiteName'] == sn) {
-
-        //                 var uvi1 = data[i]['UVI'];
-        //                 var uvi = Number(uvi1);
-        //                 switch (true) {
-        //                     case (uvi == 0):
-        //                         $('#result').html("UVI = " + data[i]['UVI'] + "：沒有");
-        //                         cpf.request('["tone_play", 6, 698, 300], ["sleep", 300]');
-        //                         cpf.request('["tone_play", 6, 698, 300], ["sleep", 300]');
-        //                         cpf.request('["tone_play", 6, 698, 300], ["sleep", 300]');
-        //                         break;
-        //                     case (uvi <= 2):
-        //                         $('#result').html("UVI = " + data[i]['UVI'] + "：微量級");
-        //                         cpf.request('["tone_play", 6, 698, 300], ["sleep", 300]');
-        //                         break;
-        //                     case (uvi <= 5):
-        //                         $('#result').html("UVI = " + data[i]['UVI'] + "：低量級");
-        //                         break;
-
-        //                 }
-        //             }
-        //         }
-        //     });
-        // });
-
         setup();
+        function init() {
+            left_init_drink = cpf.get("socket a3");
+            right_init_drink = cpf.get("socket a0");
+            left_val = 0;
+            right_val = 0;
+            left_drink = 0;
+            right_drink = 0;
+        }
 
         function setup() {
             if (cpf) {
-                cpf.setPinMode('["resetPin"] ,["setPinMode", "digital", 6, "TONE"]');
+                cpf.setPinMode('["resetPin"] ,["setPinMode", "digital", 6, "TONE"] , ["setPinMode", "digital", 4, "SERVO"] , ["setPinMode", "digital", 8, "SERVO"]');
                 //cpf.request('["tone_play", 6, 698, 300], ["sleep", 300]');
             }
         }
 
-        // function beep(times){
-        //     for (let index = 0; index < times; index++) {
-
-        //     }
-        // }
     });
 </script>
 
