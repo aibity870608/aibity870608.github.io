@@ -95,7 +95,7 @@
 
         function setup() {
             if (cpf) {
-                cpf.setPinMode('["resetPin"] ,["setPinMode", "digital", 6, "TONE"] , ["setPinMode", "digital", 4, "SERVO"] , ["setPinMode", "digital", 8, "SERVO"]');
+                cpf.setPinMode('["resetPin"] ,["setPinMode", "digital", 6, "TONE"] , ["setPinMode", "digital", 4, "SERVO"] , ["setPinMode", "digital", 8, "SERVO"],["setPinMode", "analog", 0, "OUTPUT"] ');
                 //cpf.request('["tone_play", 6, 698, 300], ["sleep", 300]');
             }
         }
