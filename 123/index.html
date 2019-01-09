@@ -50,7 +50,7 @@
             left_val = $("#leftbox").val();
             right_val = $("#rightbox").val();
             console.log(right_init_drink);
-            if (left_init_drink != 0 && right_init_drink != 0) {
+            // if (left_init_drink != 0 && right_init_drink != 0) {
                 if (left_val != 0 && right_val != 0) {
                     //馬達打開
                     cpf.request('["analogWrite", 4, 180 ]');
@@ -61,9 +61,9 @@
                 } else {
                     alert("請設定左、右溶液重");
                 }
-            } else {
-                alert("請確認左、右溶液已倒入");
-            }
+            // } else {
+                // alert("請確認左、右溶液已倒入");
+            // }
 
         });
         function loop() {
