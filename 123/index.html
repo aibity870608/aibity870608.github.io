@@ -35,9 +35,36 @@
             //     cpf.request('["analogWrite", 8, 180 ]');
             // }
         }
-        setInterval(loop, 200);
+        setInterval(loop, 500);
         setup();
+        function rightstart() {
+            $("#right").removeClass("done");
+            $("#right").addClass("start");
 
+            start("right");
+        }
+        function leftstart() {
+            $("#left").removeClass("done");
+            $("#left").addClass("start");
+
+            start("left");
+        }
+        function start(name) {
+            if (name == "left") {
+                cpf.request('["analogWrite", 4, 180 ]');
+            }
+            if (name == "right") {
+                cpf.request('["analogWrite", 8, 180 ]');
+            }
+        }
+        function done() {
+            cpf.request('["analogWrite", 4, 0 ]');
+            cpf.request('["analogWrite", 8, 0 ]');
+            $("#right").removeClass("start");
+            $("#right").addClass("done");
+            $("#left").removeClass("start");
+            $("#left").addClass("done");
+        }
         function setup() {
             if (cpf) {
                 cpf.setPinMode('["resetPin"] ,["setPinMode", "digital", 6, "TONE"] , ["setPinMode", "digital", 4, "SERVO"] , ["setPinMode", "digital", 8, "SERVO"],["setPinMode", "analog", 0, "OUTPUT"] , ["setPinMode", "analog", 3, "OUTPUT"] ');

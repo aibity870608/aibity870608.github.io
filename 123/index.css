@@ -5,6 +5,7 @@
     text-align: center;
 }
 .done{
+    margin: 15px;
     width: 100px;
     height: 100px;
     text-align: center;
@@ -15,6 +16,7 @@
     font-weight: 700;
 }
 .start{
+    margin: 15px;
     width: 100px;
     height: 100px;
     text-align: center;
