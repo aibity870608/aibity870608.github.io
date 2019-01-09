@@ -4,3 +4,23 @@
     color: red;
     text-align: center;
 }
+.done{
+    width: 500px;
+    height: 500px;
+    text-align: center;
+    line-height: 500px;
+    background-color: red;
+    color: white;
+    font-size: 50px;
+    font-weight: 700;
+}
+.start{
+    width: 500px;
+    height: 500px;
+    text-align: center;
+    line-height: 500px;
+    background-color:white;
+    color: green;
+    font-size: 50px;
+    font-weight: 700;
+}

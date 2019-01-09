@@ -14,84 +14,30 @@
 
 <body>
     <div class="container">
-        <div class="card">
-            <div class="container">
-                左方溶液重 (ml or g)：
-                <input id="leftbox" type="text">
-            </div>
-            <div class="container">
-                右方溶液重 (ml or g)：
-                <input id="rightbox" type="text">
-            </div>
-            <button id="cbtn">START</button>
-            <div id="result">
-                DONE
-            </div>
+        <div class="row">
+            <div id="left" class="done">DONE</div>
+            <div id="right" class="done">DONE</div>
         </div>
     </div>
 </body>
 <script>
     $(function () {
-        var left_init_drink = 0;
-        var right_init_drink = 0;
-        var left_drink;
-        var right_drink;
-        var left_val;
-        var right_val;
-
-        $("#result").hide();
-        console.log(left_init_drink);
-        console.log(right_init_drink);
-
-        $("#cbtn").click(function () {
-            
-            left_init_drink = cpf.get("socket a3");
-            right_init_drink = cpf.get("socket a0");
-            left_val = $("#leftbox").val();
-            right_val = $("#rightbox").val();
-            console.log(right_init_drink);
-            // if (left_init_drink != 0 && right_init_drink != 0) {
-                if (left_val != 0 && right_val != 0) {
-                    //馬達打開
-                    cpf.request('["analogWrite", 4, 180 ]');
-                    cpf.request('["analogWrite", 8, 180 ]');
-
-                    // code
-                    setInterval(loop, 800);
-                } else {
-                    alert("請設定左、右溶液重");
-                }
-            // } else {
-                // alert("請確認左、右溶液已倒入");
-            // }
-
-        });
         function loop() {
-
             //判斷重量
-            left_drink = cpf.get("socket a3");
-            right_drink = cpf.get("socket a0");
+            cpf.request('["analogWrite", 4, 0 ]');
+            cpf.request('["analogWrite", 8, 0 ]');
 
-            console.log(cpf.get("socket a0"));
-            console.log(cpf.get("socket a3"));
-            if ((left_drink != 0 && right_drink != 0) && (left_init_drink - left_drink >= left_val) && (right_init_drink - right_drink >= right_val)) {
-                cpf.request('["analogWrite", 4, 0 ]');
-                cpf.request('["analogWrite", 8, 0 ]');
-                $("#result").show();
-                //init
-                init();
-            }
+            var left_drink = cpf.get("socket a3");
+            var right_drink = cpf.get("socket a0");
+            console.log(left_drink);
+            console.log(right_drink);
+            // if (left_drink != 0 || right_drink != 0) {
+            //     cpf.request('["analogWrite", 4, 180 ]');
+            //     cpf.request('["analogWrite", 8, 180 ]');
+            // }
         }
-
+        setInterval(loop, 800);
         setup();
-        function init() {
-            left_init_drink = cpf.get("socket a3");
-            right_init_drink = cpf.get("socket a0");
-            left_val = 0;
-            right_val = 0;
-            left_drink = 0;
-            right_drink = 0;
-        }
 
         function setup() {
             if (cpf) {
@@ -100,4 +46,5 @@
         }
     });
 </script>
+
 </html>
