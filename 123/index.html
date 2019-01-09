@@ -24,16 +24,20 @@
     $(function () {
         function loop() {
             //判斷重量
-
-
             var left_drink = cpf.get("socket a3");
             var right_drink = cpf.get("socket a0");
             console.log(left_drink);
             console.log(right_drink);
-            // if (left_drink != 0 || right_drink != 0) {
-            //     cpf.request('["analogWrite", 4, 180 ]');
-            //     cpf.request('["analogWrite", 8, 180 ]');
-            // }
+            if (left_drink >= 500) {
+                leftstart();
+            }else{
+                done();
+            }
+            if (right_drink >= 500) {
+                rightstart();
+            }else{
+                done();
+            }
         }
         setInterval(loop, 500);
         setup();
