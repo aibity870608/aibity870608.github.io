@@ -22,10 +22,12 @@
 </body>
 <script>
     $(function () {
+        var left_drink = 0;
+        var right_drink = 0
         function loop() {
             //判斷重量
-            var left_drink = cpf.get("socket a3");
-            var right_drink = cpf.get("socket a0");
+            left_drink = cpf.get("socket a3");
+            right_drink = cpf.get("socket a0");
             console.log(left_drink);
             console.log(right_drink);
             if (left_drink >= 500) {
@@ -68,6 +70,8 @@
             $("#right").addClass("done");
             $("#left").removeClass("start");
             $("#left").addClass("done");
+            left_drink = 0;
+            right_drink = 0;
         }
         function setup() {
             if (cpf) {
