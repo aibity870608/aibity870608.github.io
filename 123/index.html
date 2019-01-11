@@ -26,19 +26,19 @@
         var right_drink = 0
         function loop() {
             //判斷重量
-            left_drink = cpf.get("socket a3");
-            right_drink = cpf.get("socket a0");
+            left_drink = cpf.get("socket a0");
+            right_drink = cpf.get("socket a3");
             console.log(left_drink);
             console.log(right_drink);
             if (left_drink >= 500) {
                 leftstart();
-            }else{
-                done();
+            } else {
+                done("left");
             }
             if (right_drink >= 500) {
                 rightstart();
-            }else{
-                done();
+            } else {
+                done("right");
             }
         }
         setInterval(loop, 500);
@@ -46,34 +46,36 @@
         function rightstart() {
             $("#right").removeClass("done");
             $("#right").addClass("start");
-            $("#right").html = "start";
+            $("#right").html("start");
             start("right");
         }
         function leftstart() {
             $("#left").removeClass("done");
             $("#left").addClass("start");
-            $("#left").html = "start";
+            $("#left").html("start");
             start("left");
         }
         function start(name) {
             if (name == "left") {
-                cpf.request('["analogWrite", 4, 180 ]');
-            }
-            if (name == "right") {
                 cpf.request('["analogWrite", 8, 180 ]');
             }
+            if (name == "right") {
+                cpf.request('["analogWrite", 4, 180 ]');
+            }
         }
-        function done() {
-            cpf.request('["analogWrite", 4, 0 ]');
-            cpf.request('["analogWrite", 8, 0 ]');
-            $("#right").removeClass("start");
-            $("#right").addClass("done");
-            $("#left").removeClass("start");
-            $("#left").addClass("done");
-            $("#left").html = "done";
-            $("#left").html = "done";
-            left_drink = 0;
-            right_drink = 0;
+        function done(name) {
+            if (name == "left") {
+                cpf.request('["analogWrite", 8, 0 ]');
+                $("#left").removeClass("start");
+                $("#left").addClass("done");
+                $("#left").html("done");
+            }
+            if (name == "right") {
+                cpf.request('["analogWrite", 4, 0 ]');
+                $("#right").removeClass("start");
+                $("#right").addClass("done");
+                $("#right").html("done");
+            }
         }
         function setup() {
             if (cpf) {
